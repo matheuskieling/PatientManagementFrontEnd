@@ -1,4 +1,4 @@
-name: Deploy Frontend Manual
+name: Deploy Frontend (Angular)
 
 on:
   workflow_dispatch:
@@ -6,25 +6,47 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout código
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          node-version: '22'
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Install dependencies and build
+      - name: Deploy via SSH
         run: |
-          cd PatientManagementFrontEnd
-          npm install
-          ng build --configuration=production
+          ssh -o StrictHostKeyChecking=no deploy@72.60.2.46 << 'EOF'
+            set -e
 
-      - name: Copy files to VPS
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: deploy
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: "PatientManagementFrontEnd/dist/*"
-          target: "/home/deploy/PatientManagementFrontEnd/dist"
+            # Variáveis
+            APP_DIR=\$HOME/PatientManagementFrontEnd
+            WWW_DIR=/var/www/patient-frontend
+
+            echo "🔁 Limpando repositório antigo (se existir)..."
+            rm -rf \$APP_DIR
+
+            echo "📥 Clonando projeto..."
+            git clone https://github.com/matheuskieling/PatientManagementFrontEnd.git \$APP_DIR
+
+            echo "📦 Instalando dependências e buildando..."
+            cd \$APP_DIR
+            export NVM_DIR="\$HOME/.nvm"
+            source \$NVM_DIR/nvm.sh
+            nvm install 22.17.0
+            nvm use 22.17.0
+            npm ci
+            npm run build --configuration=production
+
+            echo "🚚 Copiando arquivos para Nginx..."
+            sudo rm -rf \$WWW_DIR/*
+            sudo cp -r dist/patient-management-front-end/* \$WWW_DIR
+            sudo chown -R www-data:www-data \$WWW_DIR
+
+            echo "✅ Reload Nginx"
+            sudo nginx -t && sudo systemctl reload nginx
+
+            echo "✅ Deploy concluído com sucesso!"
+          EOF
