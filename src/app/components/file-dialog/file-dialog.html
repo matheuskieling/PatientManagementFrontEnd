@@ -1,0 +1,74 @@
+<div class="dialog-wrapper">
+  <div id="print-container" class="print-container">
+    <div class="border">
+      <div class="file-number">
+        <div>N°: {{ data.fileNumber }}</div>
+      </div>
+      <div class="dados">
+        <table class="dados-table">
+          <tr>
+            <th class="dados-table-header">NOME:</th>
+            <td class="dados-table-row">{{ data.name?.toUpperCase() ?? '' }}</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">DN:</th>
+            <td class="dados-table-row">{{ (data.birthDate | date: 'dd/MM/yyyy') ?? '' }}</td>
+          </tr>
+          <tr>
+            <td class="dados-table-row" colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">CONVÊNIO:</th>
+            <td class="dados-table-row">{{ data.healthPlan?.toUpperCase() ?? '' }}</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">N° CARTEIRA:</th>
+            <td class="dados-table-row">{{ data.healthPlanNumber ?? '' }}</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">CPF</th>
+            <td class="dados-table-row">{{ data.cpf ?? '' }}</td>
+          </tr>
+          <tr>
+            <td class="dados-table-row" colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">ENDEREÇO</th>
+            <td class="dados-table-row">{{ data.address?.toUpperCase() ?? '' }}</td>
+          </tr>
+          <tr>
+            <td class="dados-table-row" colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <th class="dados-table-header">TELEFONES</th>
+            <td class="dados-table-row">
+              <table>
+                <tr>
+                  <td class="dados-table-row-phone">{{ data.contacts.length >= 1 ? data.contacts[0].phone : '' }}</td>
+                  <td style="width: 20px;"></td>
+                  <td class="dados-table-row-name">R</td>
+                  <td style="width: 10px;"></td>
+                  <td class="dados-table-row-name">{{data.contacts.length >= 1 ? data.contacts[0].name : ''}}</td>
+                </tr>
+                <tr>
+                  <td class="dados-table-row-phone">{{ data.contacts.length >= 2 ? data.contacts[1].phone : '' }}</td>
+                  <td style="width: 20px;"></td>
+                  <td class="dados-table-row-name">R</td>
+                  <td style="width: 10px;"></td>
+                  <td class="dados-table-row-name">{{data.contacts.length >= 2 ? data.contacts[1].name : ''}}</td>
+                </tr>
+                <tr>
+                  <td class="dados-table-row-phone">{{ data.contacts.length >= 3 ? data.contacts[2].phone : '' }}</td>
+                  <td style="width: 20px;"></td>
+                  <td class="dados-table-row-name">R</td>
+                  <td style="width: 10px;"></td>
+                  <td class="dados-table-row-name">{{data.contacts.length >= 3 ? data.contacts[2].name : ''}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

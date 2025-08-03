@@ -1,0 +1,30 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
+
+@Component({
+  selector: 'app-login',
+  imports: [
+    ReactiveFormsModule
+  ],
+  templateUrl: './login.html',
+  styleUrl: './login.scss'
+})
+export class Login {
+  loginForm: FormGroup;
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
+
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
+}
