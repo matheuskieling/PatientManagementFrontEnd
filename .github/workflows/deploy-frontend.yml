@@ -21,31 +21,25 @@ jobs:
           ssh -o StrictHostKeyChecking=no deploy@72.60.2.46 << 'EOF'
             set -e
 
-            # Variáveis
-            APP_DIR=\$HOME/PatientManagementFrontEnd
-            WWW_DIR=/var/www/patient-frontend
+            echo "🔁 Removendo repositório antigo..."
+            rm -rf PatientManagementFrontEnd
 
-            echo "🔁 Limpando repositório antigo (se existir)..."
-            rm -rf \$APP_DIR
-
-            echo "📥 Clonando projeto..."
-            git clone https://github.com/matheuskieling/PatientManagementFrontEnd.git \$APP_DIR
+            echo "📥 Clonando repositório..."
+            git clone https://github.com/matheuskieling/PatientManagementFrontEnd.git /home/deploy/PatientManagementFrontEnd
 
             echo "📦 Instalando dependências e buildando..."
-            cd \$APP_DIR
-            export NVM_DIR="\$HOME/.nvm"
-            source \$NVM_DIR/nvm.sh
+            cd PatientManagementFrontEnd
             nvm install 22.17.0
             nvm use 22.17.0
             npm ci
             npm run build --configuration=production
 
-            echo "🚚 Copiando arquivos para Nginx..."
-            sudo rm -rf \$WWW_DIR/*
-            sudo cp -r dist/patient-management-front-end/* \$WWW_DIR
-            sudo chown -R www-data:www-data \$WWW_DIR
+            echo "🚚 Copiando arquivos para o Nginx..."
+            sudo rm -rf /var/www/patient-frontend/*
+            sudo cp -r dist/patient-management-front-end/* /var/www/patient-frontend
+            sudo chown -R www-data:www-data /var/www/patient-frontend
 
-            echo "✅ Reload Nginx"
+            echo "✅ Reiniciando Nginx"
             sudo nginx -t && sudo systemctl reload nginx
 
             echo "✅ Deploy concluído com sucesso!"
