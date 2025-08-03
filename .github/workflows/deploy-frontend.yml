@@ -38,7 +38,7 @@ jobs:
 
             echo "🚚 Copiando arquivos para o Nginx..."
             sudo rm -rf /var/www/patient-frontend/*
-            sudo cp -r dist/FicharioDigitalFront/* /var/www/patient-frontend
+            sudo cp -r dist/FicharioDigitalFront/browser/* /var/www/patient-frontend/
             sudo chown -R www-data:www-data /var/www/patient-frontend
 
             echo "✅ Reiniciando Nginx"
