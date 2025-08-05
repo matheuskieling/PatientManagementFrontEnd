@@ -4,11 +4,12 @@ import { IPatient } from '../../interfaces/IPatient.model';
 import { AuthService } from '../../services/auth-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FileDialog } from '../../components/file-dialog/file-dialog';
+import { Header } from '../../components/header/header';
 
 
 @Component({
   selector: 'app-home',
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, Header],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

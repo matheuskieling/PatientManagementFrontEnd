@@ -1,0 +1,70 @@
+@use '../../../mixins/typography' as typography;
+
+.login-container {
+  display: grid;
+  height: 100vh;
+  place-content: center;
+}
+.content-background {
+  background-color: white;
+  padding: var(--space-1600) var(--space-1000) var(--space-1000) var(--space-1000);
+}
+
+form {
+  display: grid;
+  gap: var(--space-600);
+  width: fit-content;
+}
+
+.title {
+  place-self: center;
+  display: flex;
+  gap: var(--space-500);
+  @include typography.title();
+  margin-bottom: var(--space-2000);
+}
+
+button {
+  margin-top: var(--space-550);
+  place-self: start;
+  @include typography.h5-regular();
+}
+nz-icon {
+  color: rgba(0,0,0, 0.45);
+  font-size: var(--space-400);
+}
+
+.form-field {
+  display: grid;
+}
+
+.form-field-input {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-right: 2.5rem; // space for the icon
+  }
+
+  nz-icon {
+    position: absolute;
+    top: 25%;
+    right: 0.75rem;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+}
+label {
+  width: 360px;
+  @include typography.body-regular();
+  margin-bottom: 8px;
+}
+
+.error {
+  display: grid;
+  color: red;
+  margin-top: var(--space-200);
+  gap: var(--space-100);
+  font-size: var(--space-300);
+}

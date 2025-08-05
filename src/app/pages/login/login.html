@@ -1,17 +1,40 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="email">Email</label>
-    <input id="email" type="email" formControlName="email" required />
-    @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
-      <div>Email is required.</div>
-    }
+<div class="login-container">
+  <div class="content-background">
+    <div class="title">
+      <img src="logo.svg" alt="image" class="logo" />
+      <h1>Fichário digital</h1>
+    </div>
+    <div>
+      <form class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+          <label for="email">Email</label>
+            <input nz-input nzSize="large" [nzStatus]="(loginForm.get('email')?.hasError('required') || loginForm.get('email')?.hasError('email')) && loginForm.get('email')?.touched ? 'error' : ''" id="email" type="email" formControlName="email" required />
+          <div class="error">
+            @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+              <li>Email é obrigatório</li>
+            }
+            @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+              <li>Email inválido</li>
+            }
+          </div>
+          </div>
+        <div class="form-field">
+          <label for="password">Password</label>
+          <div class="form-field-input">
+            <input nz-input nzSize="large" id="password" [type]="viewPassword ? 'text' : 'password'" formControlName="password" required />
+            @if (viewPassword) {
+              <nz-icon nzType="eye" nzTheme="outline" (click)="viewPassword = false" />
+            }
+            @else {
+              <nz-icon nzType="eye-invisible" nzTheme="outline" (click)="viewPassword = true" />
+            }
+            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+              <div>Password is required.</div>
+            }
+          </div>
+        </div>
+        <button nz-button nzType="primary" nzSize="large" type="submit">Cadastrar</button>
+      </form>
+    </div>
   </div>
-  <div>
-    <label for="password">Password</label>
-    <input id="password" type="password" formControlName="password" required />
-    @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
-      <div>Password is required.</div>
-    }
-  </div>
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-</form>
+</div>

@@ -1,0 +1,24 @@
+﻿@mixin body-regular() {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #000;
+}
+
+@mixin title() {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  color: #000 !important;
+}
+
+@mixin h5-regular() {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+@mixin header-h1() {
+  font-size: var(--space-500) !important;
+  font-weight: 600 !important;
+}
