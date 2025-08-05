@@ -18,6 +18,12 @@
   line-height: 1.5 !important;
 }
 
+@mixin h4-medium() {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
 @mixin header-h1() {
   font-size: var(--space-500) !important;
   font-weight: 600 !important;

@@ -1,0 +1,69 @@
+@use '../../../mixins/typography' as typography;
+.background {
+  width: 100%;
+  background-color: white;
+  padding: var(--space-600);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-800);
+}
+
+.header-text {
+  display: grid;
+  gap: var(--space-200);
+}
+.greeting {
+  @include typography.h5-regular();
+  color: rgba(0,0,0,0.45);
+}
+.cta {
+  @include typography.h4-medium();
+  color: #000;
+}
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: var(--space-400);
+}
+label {
+  @include typography.body-regular();
+  color: rgba(0,0,0,0.85);
+}
+
+.name {
+  grid-column: 1 / span 4;
+  input {
+    padding-left: calc(var(--space-300) + var(--space-400) + var(--space-150));
+  }
+  nz-icon {
+    position: absolute;
+    top: 30%;
+    left: var(--space-300);
+    color: rgba(0,0,0,0.45);
+  }
+}
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.form-actions {
+  display: flex;
+  gap: var(--space-400);
+  align-items: center;
+}
+.form-field {
+  display: grid;
+  position: relative;
+  gap: var(--space-200);
+  input, nz-select, nz-date-picker {
+    width: 100%;
+  }
+}
+.clear-filter {
+  @include typography.h5-regular;
+  color: var(--ant-primary-8);
+  text-decoration: underline;
+}

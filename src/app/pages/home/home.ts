@@ -5,25 +5,21 @@ import { AuthService } from '../../services/auth-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FileDialog } from '../../components/file-dialog/file-dialog';
 import { Header } from '../../components/header/header';
+import { Filter } from '../../components/filter/filter';
+import { PatientTable } from '../../components/patient-table/patient-table';
+import { IPageable } from '../../interfaces/IPageable.model';
 
 
 @Component({
   selector: 'app-home',
-  imports: [MatDialogModule, Header],
+  imports: [MatDialogModule, Header, Filter, PatientTable],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class Home {
-  patients: WritableSignal<IPatient[]> = signal<IPatient[]>([]);
-  constructor(private patientService: PatientService, private authService: AuthService, private dialog: MatDialog) {}
-  ngOnInit() {
-    this.getPatients({} as IPatientFilters);
-  }
-
-  getPatients(filters: IPatientFilters) {
-    this.patientService.getPatients(filters).subscribe(patients => {
-      this.patients.set(patients.items);
-    });
+  patients: WritableSignal<IPageable<IPatient>>;
+  constructor(private patientService: PatientService, private authService: AuthService, private dialog: MatDialog) {
+    this.patients = patientService.patients
   }
 
   logout() {
@@ -31,10 +27,12 @@ export class Home {
   }
 
   openFileDialog() {
-    this.dialog.open(FileDialog, {
-      width: '1000px',
-      height: '400px',
-      data: this.patients()[2]
-    })
+    if (this.patients && this.patients().items.length > 2) {
+      this.dialog.open(FileDialog, {
+        width: '1000px',
+        height: '400px',
+        data: this.patients().items[2]
+      })
+    }
   }
 }

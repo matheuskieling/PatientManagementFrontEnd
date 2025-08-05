@@ -22,6 +22,11 @@ export interface IContact {
 export interface ICategory {
   id: string;
   name: string;
+  variant: string;
+}
+export interface IHealthPlan {
+  id: string;
+  name: string;
 }
 
 

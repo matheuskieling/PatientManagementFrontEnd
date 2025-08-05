@@ -1,0 +1,93 @@
+<div class="background">
+  <div class="header-container">
+    <div class="header-text">
+      <div class="greeting">{{greeting}}</div>
+      <div class="cta">Vamos localizar um prontuário?</div>
+    </div>
+    <app-button-with-icon text="Novo paciente" variant="primary" icon="plus"></app-button-with-icon>
+  </div>
+  <div class="filters-container">
+    <form class="form-container" [formGroup]="filterForm">
+      <div class="form-field name">
+        <input nz-input nzSize="large" placeholder="Digite o nome do paciente" formControlName="name"/>
+        @if (true) {
+          <nz-icon nzType="search" ></nz-icon>
+        }
+      </div>
+
+      <div class="form-field">
+        <label>Data de nacimento</label>
+        <nz-date-picker nzPlaceHolder="Selecionar uma data" formControlName="birthDate"></nz-date-picker>
+      </div>
+
+      <div class="form-field">
+        <label>Categoria</label>
+        <nz-select  nzPlaceHolder="Selecione" formControlName="category">
+          <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+          @for (option of categories; track option.id) {
+            <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <div class="form-field">
+        <label>Convênio</label>
+        <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan">
+          <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+          @for (option of healthPlans; track option.id) {
+            <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
+          }
+        </nz-select>
+      </div>
+
+      <div class="form-field">
+        <label>Gênero</label>
+        <nz-select nzPlaceHolder="Selecione" formControlName="gender">
+
+          <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+          <nz-option nzValue="M" nzLabel="Masculino"></nz-option>
+          <nz-option nzValue="F" nzLabel="Feminino"></nz-option>
+        </nz-select>
+      </div>
+
+      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+        <label>Telefone</label>
+        <input nz-input placeholder="Insira o telefone" formControlName="phone"/>
+      </div>
+
+      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+        <label>CPF</label>
+        <input nz-input placeholder="Insira o CPF" formControlName="cpf"/>
+      </div>
+
+      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+        <label>Ficha</label>
+        <input nz-input placeholder="Insira o número" formControlName="record"/>
+      </div>
+
+      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+        <label>Arquivado</label>
+        <nz-select nzPlaceHolder="Selecione" formControlName="archived">
+          <nz-option [nzValue]="true" nzLabel="Sim"></nz-option>
+          <nz-option [nzValue]="false" nzLabel="Não"></nz-option>
+        </nz-select>
+      </div>
+    </form>
+    <app-space height="16px"></app-space>
+    <div class="form-footer">
+      <div>
+        <app-button-with-icon [text]="expandedFilter ? 'Recolher filtros' : 'Expandir filtros'"
+                              icon="filter"
+                              (click)="expandedFilter = !expandedFilter"></app-button-with-icon>
+      </div>
+      <div class="form-actions">
+        <div class="clear-filter">Limpar</div>
+        <app-button-with-icon text="Buscar"
+                              icon="search"
+                              variant="primary"
+                              (click)="submitForm()"></app-button-with-icon>
+      </div>
+    </div>
+
+  </div>
+</div>
