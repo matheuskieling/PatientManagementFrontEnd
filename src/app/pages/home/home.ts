@@ -20,6 +20,7 @@ export class Home {
   patients: WritableSignal<IPageable<IPatient>>;
   constructor(private patientService: PatientService, private authService: AuthService, private dialog: MatDialog) {
     this.patients = patientService.patients
+    patientService.getPatients();
   }
 
   logout() {
