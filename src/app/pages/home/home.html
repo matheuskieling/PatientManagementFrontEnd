@@ -4,11 +4,4 @@
   <app-filter></app-filter>
   <app-patient-table></app-patient-table>
 </main>
-@for (patient of patients().items; track patient.id) {
-  <div class="patient-card">
-    <h3>{{patient.name}}</h3>
-  </div>
-}
-
-<div (click)="openFileDialog()">FILE</div>
 

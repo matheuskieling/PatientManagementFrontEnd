@@ -17,23 +17,9 @@ import { IPageable } from '../../interfaces/IPageable.model';
   styleUrl: './home.scss'
 })
 export class Home {
-  patients: WritableSignal<IPageable<IPatient>>;
-  constructor(private patientService: PatientService, private authService: AuthService, private dialog: MatDialog) {
-    this.patients = patientService.patients
-    patientService.getPatients();
-  }
+  constructor(private authService: AuthService) {}
 
   logout() {
     this.authService.logout();
-  }
-
-  openFileDialog() {
-    if (this.patients && this.patients().items.length > 2) {
-      this.dialog.open(FileDialog, {
-        width: '1000px',
-        height: '400px',
-        data: this.patients().items[2]
-      })
-    }
   }
 }

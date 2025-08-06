@@ -1,1 +1,42 @@
-<p>patient-table works!</p>
+<div class="background">
+  <div class="title">Pacientes ({{patients().totalResults}})</div>
+  <nz-table [nzTotal]="patients().totalResults"
+            [nzPageSize]="10"
+            [nzPageIndex]="pageIndex"
+            [nzShowPagination]="true"
+            [nzFrontPagination]="false"
+            (nzPageIndexChange)="changePage($event)"
+            nzPaginationPosition="bottom"
+            [nzBordered]="true"
+            [nzWidthConfig]="widthConfig"
+            [nzData]="patients().items">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Ficha</th>
+      <th>Data de Nascimento</th>
+      <th>Gênero</th>
+      <th>Categoria</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (patient of patients().items; track patient.id) {
+      <tr>
+        <td>{{patient.name}}</td>
+        <td>{{patient.fileNumber}}</td>
+        <td>{{patient.birthDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{patient.gender}}</td>
+        <td>
+          @if (patient.category)
+          {
+            <nz-tag [nzColor]="patient.category.variant.length ? patient.category.variant : '#f50'">{{patient.category.name}}</nz-tag>
+
+          }
+        </td>
+        <td class="access-file" (click)="accessFile()">Ver Ficha</td>
+      </tr>
+    }
+  </tbody>
+  </nz-table>
+</div>

@@ -1,0 +1,62 @@
+@use '../../../mixins/typography' as typography;
+.background {
+  width: 100%;
+  background-color: white;
+  padding: var(--space-600);
+  display: grid;
+  gap: var(--space-400);
+}
+.access-file {
+  text-decoration: underline;
+  color: var(--ant-primary-8);
+  cursor: pointer;
+}
+
+th {
+  background-color: #fafafa;
+  @include typography.body-medium;
+  color: rgba(0,0,0,0.85);
+  text-align: left;
+  padding: var(--space-400);
+  border: 1px solid rgba(0,0,0, 0.06);
+}
+td {
+  padding: var(--space-400);
+  border-bottom: 1px solid rgba(0,0,0, 0.06);
+}
+tr {
+  border: 1px solid rgba(0,0,0, 0.06);
+}
+:host ::ng-deep {
+  .ant-pagination-disabled .ant-pagination-item-link, .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: not-allowed;
+  }
+  .ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link
+  {
+    border: none;
+  }
+  .ant-pagination-item {
+    border: none;
+    font-weight: 500 !important;
+    a {
+      padding: 0;
+    }
+  }
+
+  .ant-table-pagination {
+    display: flex;
+    gap: 2px;
+  }
+  .ant-pagination-item-active  {
+    border: 1px solid var(--ant-primary-8);
+    border-radius: var(--space-100);
+    a {
+      color: var(--ant-primary-8);
+    }
+  }
+  .ant-pagination-prev, .ant-pagination-jump-prev, .ant-pagination-jump-next {
+    margin-right: 2px;
+  }
+}

@@ -2,13 +2,13 @@
   id: string,
   fileNumber?: number | null,
   birthDate?: Date | null,
-  healthPlan?: string | null,
+  healthPlan?: IHealthPlan | null,
   healthPlanNumber?: string | null,
+  gender: string | null,
   name?: string | null,
   cpf?: string | null,
   address?: string | null,
   contacts: IContact[],
-  responsible?: string | null,
   category?: ICategory | null,
   isArchived?: boolean
 }

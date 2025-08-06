@@ -22,22 +22,43 @@
 
       <div class="form-field">
         <label>Categoria</label>
-        <nz-select  nzPlaceHolder="Selecione" formControlName="category">
+        <nz-select
+          nzPlaceHolder="Selecione"
+          formControlName="category"
+          [nzDropdownRender]="dropdownRenderCategory"
+          style="width: 100%">
+
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           @for (option of categories; track option.id) {
             <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
           }
+
         </nz-select>
+
+        <!-- Template do botão customizado -->
+        <ng-template #dropdownRenderCategory>
+          <div class="custom-dropdown-btn" (click)="handleNewCategory()">
+            Criar nova categoria
+          </div>
+        </ng-template>
       </div>
 
       <div class="form-field">
         <label>Convênio</label>
-        <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan">
+        <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan"
+                   [nzDropdownRender]="dropdownRenderConvenio">
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           @for (option of healthPlans; track option.id) {
             <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
           }
         </nz-select>
+
+        <!-- Template do botão customizado -->
+        <ng-template #dropdownRenderConvenio>
+          <div class="custom-dropdown-btn" (click)="handleNewHealthPlan()" >
+            Adicionar novo convênio
+          </div>
+        </ng-template>
       </div>
 
       <div class="form-field">

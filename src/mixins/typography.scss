@@ -5,6 +5,12 @@
   color: #000;
 }
 
+@mixin body-medium() {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
 @mixin title() {
   font-size: 32px !important;
   font-weight: 600 !important;

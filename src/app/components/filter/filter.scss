@@ -19,11 +19,32 @@
   @include typography.h5-regular();
   color: rgba(0,0,0,0.45);
 }
+:host ::ng-deep {
+  .ant-select-item-option-content {
+      color: var(--ant-primary-8) !important;
+      cursor: pointer;
+  }
+}
+:host ::ng-deep .ant-select-item-option.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: white !important;
+}
 .cta {
   @include typography.h4-medium();
   color: #000;
 }
+.custom-dropdown-btn {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-250) var(--space-600);
+  cursor: pointer;
+  margin-top: 4px;
+  color: var(--ant-primary-8) !important;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
 .form-container {
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: var(--space-400);

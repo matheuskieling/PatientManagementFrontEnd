@@ -48,9 +48,6 @@ export class Filter {
       record: [''],
       archived: [null],
     });
-  }
-
-  ngOnInit() {
     const now = new Date().getHours();
     if (now < 12) {
       this.greeting = "Bom dia!";
@@ -71,5 +68,14 @@ export class Filter {
     if (this.filterForm.valid) {
       this.patientService.setFilters(this.filterForm);
     }
+  }
+  handleNewCategory() {
+    // open dialog
+    // create category subscribe
+    // this.categories.push(newCategory)
+    // this.form.get('category')?.setValue(newCategory.id)
+  }
+  handleNewHealthPlan() {
+
   }
 }
