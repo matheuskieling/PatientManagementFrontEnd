@@ -1,6 +1,6 @@
 @page {
   size: 225mm 163mm;
-  margin: -20px;
+  //margin: -20px;
   /* Only print the first page */
   @top-right {
     content: "";
@@ -15,7 +15,7 @@
   }
   /* Hide everything after the first page */
   body {
-    page-break-after: always;
+    //page-break-after: always;
   }
 }
 
