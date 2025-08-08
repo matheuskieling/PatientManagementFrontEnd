@@ -8,14 +8,11 @@
 }
 @media print {
   body * {
-    visibility: hidden;
+    display: none !important;
   }
-  #print-container * {
-    visibility: visible;
-  }
-  /* Hide everything after the first page */
-  body {
-    //page-break-after: always;
+  #print-container, #print-container * {
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
