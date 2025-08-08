@@ -2,7 +2,7 @@
 <div class="dialog-container">
   <div class="header-container">
     <h2 class="header-text">Novo Paciente</h2>
-    <nz-icon nzType="close" class="close-icon"></nz-icon>
+    <nz-icon nzType="close" class="close-icon" (click)="closeModal()" [style.cursor]="'pointer'"></nz-icon>
   </div>
   <form class="form-container" [formGroup]="addForm">
     <div class="form-field full-width">

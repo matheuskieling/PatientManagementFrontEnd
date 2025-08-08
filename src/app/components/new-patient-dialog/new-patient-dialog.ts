@@ -276,6 +276,9 @@ export class NewPatientDialog {
       width: '572px',
     });
   }
+  closeModal() {
+    this.dialogRef.close();
+  }
   handleNewHealthPlan() {
     this.dialog.open(NewHealthPlanDialog, {
       width: '572px',

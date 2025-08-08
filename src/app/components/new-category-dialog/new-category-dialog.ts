@@ -1,5 +1,5 @@
 import { Component, WritableSignal } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ICategory, ICategoryRequest } from '../../interfaces/IPatient.model';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
@@ -27,7 +27,7 @@ export class NewCategoryDialog {
   isEditing: boolean = false;
   editingCategoryId: string | null | undefined = null;
   categories: WritableSignal<ICategory[]>;
-  constructor(private fb: FormBuilder, private categoryService: CategoryService, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private categoryService: CategoryService, private dialog: MatDialog, private dialogRef: MatDialogRef<NewCategoryDialog>) {
     this.addCategoryForm = this.fb.group({
       name: ['', Validators.required],
     })
@@ -92,5 +92,8 @@ export class NewCategoryDialog {
         this.categoryService.deleteCategory(category);
       });
     })
+  }
+  closeModal() {
+    this.dialogRef.close();
   }
 }

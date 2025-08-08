@@ -1,6 +1,6 @@
 import { Component, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { IHealthPlan, IHealthPlanRequest } from '../../interfaces/IPatient.model';
 import { HealthPlanService } from '../../services/health-plan-service';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
@@ -27,7 +27,7 @@ export class NewHealthPlanDialog {
   isEditing: boolean = false;
   editingHealthPlanId: string | null | undefined = null;
   healthPlans: WritableSignal<IHealthPlan[]>;
-  constructor(private fb: FormBuilder, private healthPlanService: HealthPlanService, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private healthPlanService: HealthPlanService, private dialog: MatDialog, private dialogRef: MatDialogRef<NewHealthPlanDialog>) {
     this.addHealthPlanForm = this.fb.group({
       name: ['', Validators.required],
     })
@@ -87,5 +87,8 @@ export class NewHealthPlanDialog {
         this.healthPlanService.deleteHealthPlan(healthPlan);
       });
     })
+  }
+  closeModal() {
+    this.dialogRef.close();
   }
 }

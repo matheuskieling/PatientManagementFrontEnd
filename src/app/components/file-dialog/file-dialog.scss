@@ -1,6 +1,5 @@
 @page {
-  size: 225mm 163mm;
-  margin: -20px;
+  size: A4 landscape;
 }
 @media print {
   body * {
@@ -14,22 +13,22 @@
 
 #print-container {
   display: flex;
-  padding: 40px;
+  padding: 20px;
   justify-content: center;
   align-items: center;
   font-family: Arial, sans-serif;
-  font-size: var(--space-400);
+  font-size: var(--space-300);
 
   .border {
     border: 2px solid black;
     padding: 20px;
-    width: 800px;
+    width: 550px;
     display: grid;
-    font-size: var(--space-400);
+    font-size: var(--space-300);
   }
 
   .dados {
-    padding: 40px;
+    padding: 20px;
   }
 
   :host ::ng-deep{
@@ -43,7 +42,7 @@
     align-self: start;
     border: 1px solid #aaa;
     padding: 12px 20px;
-    min-width: 150px;
+    min-width: 100px;
   }
 
   .dados-table-header,
@@ -51,18 +50,18 @@
   .dados-table-row-name,
   .dados-table-row-phone {
     width: fit-content;
-    padding: var(--space-200) 0;
+    padding: var(--space-300) 0;
   }
   .dados-table-row-phone {
-    width: 100px;
+    width: 50px;
   }
   .dados-table-header {
-    min-width: 120px;
+    min-width: 80px;
   }
 
   .dados-table-row
   {
-    padding: 0 20px;
+    padding: 0;
   }
 
   .dados-table-header {
