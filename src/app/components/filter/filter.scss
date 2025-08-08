@@ -87,4 +87,5 @@ label {
   @include typography.h5-regular;
   color: var(--ant-primary-8);
   text-decoration: underline;
+  cursor: pointer;
 }

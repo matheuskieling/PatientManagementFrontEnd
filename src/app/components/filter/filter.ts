@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, WritableSignal } from '@angular/core';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
 import { NzInputDirective } from 'ng-zorro-antd/input';
@@ -10,6 +10,11 @@ import { CategoryService } from '../../services/category-service';
 import { HealthPlanService } from '../../services/health-plan-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from '../../services/patient-service';
+import { MatDialog } from '@angular/material/dialog';
+import { NewPatientDialog } from '../new-patient-dialog/new-patient-dialog';
+import { NgxMaskDirective } from 'ngx-mask';
+import { NewCategoryDialog } from '../new-category-dialog/new-category-dialog';
+import { NewHealthPlanDialog } from '../new-health-plan-dialog/new-health-plan-dialog';
 
 @Component({
   selector: 'app-filter',
@@ -18,10 +23,10 @@ import { PatientService } from '../../services/patient-service';
     ButtonWithIcon,
     NzInputDirective,
     NzSelectComponent,
-    NzDatePickerComponent,
     Space,
     NzOptionComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaskDirective
   ],
   templateUrl: './filter.html',
   styleUrl: './filter.scss'
@@ -30,13 +35,15 @@ export class Filter {
   filterForm: FormGroup;
   greeting: string = "";
   expandedFilter: boolean = false;
-  categories: ICategory[] = [];
-  healthPlans: IHealthPlan[] = [];
+  categories: WritableSignal<ICategory[]>;
+  healthPlans: WritableSignal<IHealthPlan[]>;
 
   constructor(private categoryService: CategoryService,
               private healthPlanService: HealthPlanService,
               private fb: FormBuilder,
-              private patientService: PatientService) {
+              private patientService: PatientService,
+              private dialog: MatDialog,
+              ) {
     this.filterForm = this.fb.group({
       name: [''],
       birthDate: [null],
@@ -45,8 +52,9 @@ export class Filter {
       gender: [null],
       phone: [''],
       cpf: [''],
+      rg: [''],
       record: [''],
-      archived: [null],
+      recordEco: [''],
     });
     const now = new Date().getHours();
     if (now < 12) {
@@ -56,26 +64,38 @@ export class Filter {
     } else {
       this.greeting = "Boa noite!";
     }
-    this.categoryService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    })
-    this.healthPlanService.getHealthPlans().subscribe(plan => {
-      this.healthPlans = plan
-    })
+    this.categories = this.categoryService.getCategories();
+    this.healthPlans = this.healthPlanService.getHealthPlans();
   }
 
+  onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && this.filterForm.valid) {
+      this.submitForm();
+    }
+  }
   submitForm() {
     if (this.filterForm.valid) {
       this.patientService.setFilters(this.filterForm);
     }
   }
+  handleNewPatient() {
+    this.dialog.open(NewPatientDialog, {
+      width: '572px',
+    });
+  }
   handleNewCategory() {
-    // open dialog
-    // create category subscribe
-    // this.categories.push(newCategory)
-    // this.form.get('category')?.setValue(newCategory.id)
+    this.dialog.open(NewCategoryDialog, {
+      width: '572px',
+    });
   }
   handleNewHealthPlan() {
-
+    this.dialog.open(NewHealthPlanDialog, {
+      width: '572px',
+    });
+  }
+  clearFilters() {
+    this.filterForm.reset();
+    this.patientService.page.set(1);
+    this.patientService.setFilters(this.filterForm);
   }
 }

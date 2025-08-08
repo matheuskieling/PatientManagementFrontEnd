@@ -1,0 +1,12 @@
+<div class="dialog-container">
+  <div class="dialog-content">
+    <div class="dialog-content-title">{{data.title}}</div>
+    <div class="dialog-content-subtitle">{{data.subtitle}}</div>
+  </div>
+  <div class="action-buttons">
+    @if (data.actionText) {
+      <button nz-button nzType="primary" (click)="onAction()">{{data.actionText}}</button>
+    }
+    <button nz-button (click)="onConfirm()">{{data.confirmText}}</button>
+  </div>
+</div>

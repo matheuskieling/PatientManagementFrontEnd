@@ -2,7 +2,7 @@
   <div class="title">Pacientes ({{patients().totalResults}})</div>
   <nz-table [nzTotal]="patients().totalResults"
             [nzPageSize]="10"
-            [nzPageIndex]="pageIndex"
+            [nzPageIndex]="page()"
             [nzShowPagination]="true"
             [nzFrontPagination]="false"
             (nzPageIndexChange)="changePage($event)"
@@ -13,10 +13,10 @@
     <thead>
     <tr>
       <th>Nome</th>
-      <th>Ficha</th>
+      <th>Ficha de Consulta</th>
+      <th>Ficha de Ecografia</th>
       <th>Data de Nascimento</th>
       <th>Gênero</th>
-      <th>Categoria</th>
       <th>Ação</th>
     </tr>
   </thead>
@@ -25,16 +25,10 @@
       <tr>
         <td>{{patient.name}}</td>
         <td>{{patient.fileNumber}}</td>
-        <td>{{patient.birthDate | date: 'dd/MM/yyyy'}}</td>
+        <td>{{patient.fileNumberEco}}</td>
+        <td>{{patient.birthDate | date: 'dd/MM/yyyy' : 'America/Sao_Paulo'}}</td>
         <td>{{patient.gender}}</td>
-        <td>
-          @if (patient.category)
-          {
-            <nz-tag [nzColor]="patient.category.variant.length ? patient.category.variant : '#f50'">{{patient.category.name}}</nz-tag>
-
-          }
-        </td>
-        <td class="access-file" (click)="accessFile()">Ver Ficha</td>
+        <td class="access-file" (click)="accessFile(patient)">Ver Ficha</td>
       </tr>
     }
   </tbody>

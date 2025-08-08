@@ -9,6 +9,7 @@ import { registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 registerLocaleData(pt);
 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
+    provideEnvironmentNgxMask(),
     provideHttpClient(
       withInterceptors([authInterceptor])
     ), provideNzI18n(pt_BR), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(),

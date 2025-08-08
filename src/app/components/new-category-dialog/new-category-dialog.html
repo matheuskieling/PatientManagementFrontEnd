@@ -1,0 +1,37 @@
+<div class="dialog-container">
+  <div class="dialog-title">
+    <div>Adicionar nova categoria</div>
+  </div>
+  <div class="dialog-form-and-list">
+    <form class="dialog-form" [formGroup]="addCategoryForm">
+      <input nz-input placeholder="Adicionar categoria" formControlName="name"/>
+      <app-button-with-icon icon="plus" variant="primary" (click)="createCategory()" [disabled]="(addCategoryForm.get('name')?.touched && !addCategoryForm.get('name')?.value) ?? false"></app-button-with-icon>
+    </form>
+    <div class="dialog-list">
+      @for (category of categories(); track category.id) {
+        <div class="dialog-list-item">
+          @if (isEditing && editingCategoryId === category.id) {
+            <form [formGroup]="editCategoryForm">
+              <input nz-input placeholder="Editar categoria" formControlName="name" [formGroup]="editCategoryForm"/>
+            </form>
+          }
+          @else {
+            <span>{{ category.name }}</span>
+          }
+          <div class="dialog-list-item-actions">
+            @if (isEditing && editingCategoryId === category.id) {
+              <div (click)="saveEditedCategory(category)">Salvar</div>
+            }
+            @else {
+              <div [ngClass]="isEditing ? 'disabled' : ''" (click)="editCategory(category)">Editar</div>
+            }
+            <div [ngClass]="isEditing ? 'disabled' : ''" (click)="deleteCategory(category)">Deletar</div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button nz-button nzSize="large" nzType="primary">Enviar</button>
+  </div>
+</div>

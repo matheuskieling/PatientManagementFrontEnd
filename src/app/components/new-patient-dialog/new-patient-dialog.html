@@ -1,0 +1,136 @@
+
+<div class="dialog-container">
+  <div class="header-container">
+    <h2 class="header-text">Novo Paciente</h2>
+    <nz-icon nzType="close" class="close-icon"></nz-icon>
+  </div>
+  <form class="form-container" [formGroup]="addForm">
+    <div class="form-field full-width">
+      <label>Nome completo</label>
+      <input nz-input placeholder="Digite o nome completo" formControlName="name"/>
+    </div>
+
+    <div class="form-field">
+      <label>Categoria</label>
+      <nz-select
+        nzPlaceHolder="Selecione"
+        formControlName="category"
+        [nzDropdownRender]="dropdownRenderCategory"
+        style="width: 100%">
+
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of categories(); track option.id) {
+          <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
+        }
+
+      </nz-select>
+
+      <!-- Template do botão customizado -->
+      <ng-template #dropdownRenderCategory>
+        <div class="custom-dropdown-btn" (click)="handleNewCategory()">
+          Criar nova categoria
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="form-field">
+      <label>Ficha de Consulta</label>
+      <input nz-input placeholder="Insira o número da ficha" formControlName="record"/>
+    </div>
+
+    <div class="form-field">
+      <label>Ficha de Ecografia</label>
+      <input nz-input placeholder="Insira o número da ficha" formControlName="recordEco"/>
+    </div>
+
+    <div class="form-field">
+      <label>Data de nacimento</label>
+      <input nz-input placeholder="Selecione uma data" formControlName="birthDate" mask="d0/M0/0000" [dropSpecialCharacters]="false" [showMaskTyped]="true"/>
+      @if (addForm.get('birthDate')?.invalid && addForm.get('birthDate')?.touched) {
+        <div class="error">
+          <li>Data inválida</li>
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label>Gênero</label>
+      <nz-select nzPlaceHolder="Selecione" formControlName="gender">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        <nz-option nzValue="M" nzLabel="Masculino"></nz-option>
+        <nz-option nzValue="F" nzLabel="Feminino"></nz-option>
+      </nz-select>
+    </div>
+
+    <div class="form-field">
+      <label>CPF</label>
+      <input nz-input placeholder="Insira o CPF" formControlName="cpf" mask="000.000.000-00"/>
+      @if (addForm.get('cpf')?.invalid && addForm.get('cpf')?.touched) {
+        <div class="error">
+          <li>CPF inválido</li>
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label>RG</label>
+      <input nz-input placeholder="Insira o RG" formControlName="rg" mask="0000000000"/>
+      @if (addForm.get('rg')?.invalid && addForm.get('rg')?.touched) {
+        <div class="error">
+          <li>RG inválido</li>
+        </div>
+      }
+    </div>
+
+    <div class="form-field">
+      <label>Telefone</label>
+      <input nz-input placeholder="Insira o telefone" formControlName="phone" />
+    </div>
+
+    <div class="form-field full-width">
+      <label>Endereço completo</label>
+      <input nz-input placeholder="Insira o endereço" formControlName="address"/>
+    </div>
+
+    <div class="form-field">
+      <label>Convênio</label>
+      <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan"
+                 [nzDropdownRender]="dropdownRenderConvenio">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of healthPlans(); track option.id) {
+          <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
+        }
+      </nz-select>
+
+      <!-- Template do botão customizado -->
+      <ng-template #dropdownRenderConvenio>
+        <div class="custom-dropdown-btn" (click)="handleNewHealthPlan()" >
+          Adicionar novo convênio
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="form-field">
+      <label>Número da carteirinha</label>
+      <input nz-input placeholder="Insira o número" formControlName="healthPlanNumber"/>
+    </div>
+
+    @if (!addContact) {
+      <div class="add-contact full-width" (click)="addContact = true">Adicionar Responsável</div>
+    }
+    @else {
+      <div class="form-field">
+        <label>Responsável</label>
+        <input nz-input placeholder="Insira o nome do responsável" formControlName="contactName"/>
+      </div>
+      <div class="form-field">
+        <label>Telefone do responsável</label>
+        <input nz-input placeholder="Insira o telefone do responsável" formControlName="contactPhone"/>
+      </div>
+    }
+
+  </form>
+  <div class="form-footer">
+    <app-button-with-icon text="Salvar" icon="save" [disabled]="loading" variant="primary" (click)="onSubmit()"></app-button-with-icon>
+  </div>
+</div>

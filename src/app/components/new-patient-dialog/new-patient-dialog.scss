@@ -1,0 +1,75 @@
+@use '../../../mixins/typography' as typography;
+.dialog-container {
+  display: grid;
+  gap: var(--space-400);
+}
+@media (max-height: 768px) {
+  .dialog-container {
+    overflow-y: auto;
+    max-height: 700px;
+  }
+}
+.close-icon {
+  color: rgba(0,0,0,0.45);
+}
+.header-container {
+  display: flex;
+  padding: var(--space-400) var(--space-600);
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.form-container {
+  padding: var(--space-600);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-400);
+}
+
+.custom-dropdown-btn {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-250) var(--space-600);
+  cursor: pointer;
+  margin-top: 4px;
+  color: var(--ant-primary-8) !important;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+.add-contact {
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--ant-primary-8);
+  place-self: center;
+  padding: var(--space-200) var(--space-400);
+}
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-250) var(--space-400) var(--space-250);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+label {
+  @include typography.body-regular();
+  color: rgba(0,0,0,0.85);
+}
+.form-field {
+  display: grid;
+  position: relative;
+  gap: var(--space-200);
+  input, nz-select, nz-date-picker {
+    width: 100%;
+  }
+}
+.full-width {
+  grid-column: 1 / -1;
+}
+.error {
+  display: grid;
+  color: red;
+  margin-top: var(--space-200);
+  gap: var(--space-100);
+  font-size: var(--space-300);
+}

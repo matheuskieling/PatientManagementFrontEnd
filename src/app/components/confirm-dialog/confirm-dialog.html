@@ -1,0 +1,13 @@
+<div class="dialog-container">
+  <div class="dialog-title-wrapper">
+    <nz-icon nzType="info-circle" [style.font-size]="'22px'" [style.color]="'#FAAD14'"></nz-icon>
+    <div class="dialog-content">
+      <div class="dialog-content-title">{{data.title}}</div>
+      <div class="dialog-content-subtitle" [innerHTML]="data.subtitle"></div>
+    </div>
+  </div>
+  <div class="action-buttons">
+    <button nz-button nzType="primary" [style.border-color]="'#FF4D4F'"  [style.background-color]="'#FF4D4F'" (click)="onConfirm()">{{data.confirmText}}</button>
+    <button nz-button nzType="default" (click)="onCancel()">{{data.cancelText}}</button>
+  </div>
+</div>

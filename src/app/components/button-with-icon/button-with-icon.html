@@ -1,4 +1,6 @@
-<button nz-button [nzType]="variant" nzSize="large" class="add-button">
-  <nz-icon [nzType]="icon" nzTheme="outline"></nz-icon>
-  <div>{{text}}</div>
+<button nz-button [nzType]="variant" [disabled]="disabled" [nzSize]="size" [nzDanger]="danger" [style.color]="color ? color : null" [style.border-color]="color ? color : null"  nzSize="large" class="add-button">
+  <nz-icon [nzType]="icon"  nzTheme="outline"></nz-icon>
+  @if (text) {
+    <div>{{text}}</div>
+  }
 </button>

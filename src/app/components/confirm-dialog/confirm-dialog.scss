@@ -1,0 +1,28 @@
+@use '../../../mixins/typography' as typography;
+.dialog-container {
+  display: grid;
+  padding: var(--space-800) var(--space-800) var(--space-600) var(--space-800);
+  gap: var(--space-600);
+}
+
+.dialog-title-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-400);
+}
+.dialog-content {
+  display: grid;
+  gap: var(--space-200);
+}
+.dialog-content-title {
+  @include typography.h5-medium;
+
+}
+.dialog-content-subtitle {
+  @include typography.body-regular;
+}
+.action-buttons {
+  justify-self: end;
+  display: flex;
+  gap: var(--space-200)
+}

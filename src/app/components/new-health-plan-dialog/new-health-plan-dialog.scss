@@ -1,0 +1,38 @@
+@use '../../../mixins/typography' as typography;
+.dialog-container {
+  display: grid;
+  gap: var(--space-600);
+}
+.dialog-title {
+  padding: var(--space-400) var(--space-600);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  @include typography.h5-regular;
+}
+.dialog-form-and-list {
+  padding: var(--space-600) var(--space-600);
+  display: grid;
+  gap: var(--space-400);
+}
+.dialog-form {
+  display:flex;
+}
+.dialog-list-item {
+  padding: var(--space-400) var(--space-600);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  @include typography.body-regular;
+}
+.dialog-list-item-actions {
+  display: flex;
+  gap: var(--space-400);
+  color: var(--ant-primary-8);
+  cursor: pointer;
+  text-decoration: underline;
+}
+.dialog-footer {
+  padding: var(--space-250) var(--space-400);
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}

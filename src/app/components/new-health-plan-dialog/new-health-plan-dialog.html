@@ -1,0 +1,37 @@
+<div class="dialog-container">
+  <div class="dialog-title">
+    <div>Adicionar novo convênio</div>
+  </div>
+  <div class="dialog-form-and-list">
+    <form class="dialog-form" [formGroup]="addHealthPlanForm">
+      <input nz-input placeholder="Adicionar convênio" formControlName="name"/>
+      <app-button-with-icon icon="plus" variant="primary" (click)="createHealthPlan()" [disabled]="(addHealthPlanForm.get('name')?.touched && !addHealthPlanForm.get('name')?.value) ?? false"></app-button-with-icon>
+    </form>
+    <div class="dialog-list">
+      @for (healthPlan of healthPlans(); track healthPlan.id) {
+        <div class="dialog-list-item">
+          @if (isEditing && editingHealthPlanId === healthPlan.id) {
+            <form [formGroup]="editHealthPlanForm">
+              <input nz-input placeholder="Editar convênio" formControlName="name" [formGroup]="editHealthPlanForm"/>
+            </form>
+          }
+          @else {
+            <span>{{ healthPlan.name }}</span>
+          }
+          <div class="dialog-list-item-actions">
+            @if (isEditing && editingHealthPlanId === healthPlan.id) {
+              <div (click)="saveEditedHealthPlan(healthPlan)">Salvar</div>
+            }
+            @else {
+              <div [ngClass]="isEditing ? 'disabled' : ''" (click)="editHealthPlan(healthPlan)">Editar</div>
+            }
+            <div [ngClass]="isEditing ? 'disabled' : ''" (click)="deleteHealthPlan(healthPlan)">Deletar</div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button nz-button nzSize="large" nzType="primary">Enviar</button>
+  </div>
+</div>

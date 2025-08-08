@@ -31,6 +31,11 @@
 body {
   background-color: var(--ant-background-color);
   font-family: Inter, sans-serif !important;
+  overflow: auto;
+}
+
+.font-weight-bold {
+  font-weight: bold !important;
 }
 
 * {

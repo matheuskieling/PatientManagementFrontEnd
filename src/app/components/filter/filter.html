@@ -4,12 +4,12 @@
       <div class="greeting">{{greeting}}</div>
       <div class="cta">Vamos localizar um prontuário?</div>
     </div>
-    <app-button-with-icon text="Novo paciente" variant="primary" icon="plus"></app-button-with-icon>
+    <app-button-with-icon text="Novo paciente" variant="primary" icon="plus" (click)="handleNewPatient()"></app-button-with-icon>
   </div>
   <div class="filters-container">
     <form class="form-container" [formGroup]="filterForm">
       <div class="form-field name">
-        <input nz-input nzSize="large" placeholder="Digite o nome do paciente" formControlName="name"/>
+        <input nz-input nzSize="large" placeholder="Digite o nome do paciente" formControlName="name" (keydown)="onKeyDown($event)"/>
         @if (true) {
           <nz-icon nzType="search" ></nz-icon>
         }
@@ -17,7 +17,7 @@
 
       <div class="form-field">
         <label>Data de nacimento</label>
-        <nz-date-picker nzPlaceHolder="Selecionar uma data" formControlName="birthDate"></nz-date-picker>
+        <input nz-input placeholder="Selecione uma data" formControlName="birthDate" mask="d0/M0/0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" (keydown)="onKeyDown($event)"/>
       </div>
 
       <div class="form-field">
@@ -26,10 +26,11 @@
           nzPlaceHolder="Selecione"
           formControlName="category"
           [nzDropdownRender]="dropdownRenderCategory"
-          style="width: 100%">
+          style="width: 100%" >
+
 
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
-          @for (option of categories; track option.id) {
+          @for (option of categories(); track option.id) {
             <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
           }
 
@@ -48,7 +49,7 @@
         <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan"
                    [nzDropdownRender]="dropdownRenderConvenio">
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
-          @for (option of healthPlans; track option.id) {
+          @for (option of healthPlans(); track option.id) {
             <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
           }
         </nz-select>
@@ -73,25 +74,27 @@
 
       <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
         <label>Telefone</label>
-        <input nz-input placeholder="Insira o telefone" formControlName="phone"/>
+        <input nz-input placeholder="Insira o telefone" formControlName="phone" (keydown)="onKeyDown($event)"/>
       </div>
 
       <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
         <label>CPF</label>
-        <input nz-input placeholder="Insira o CPF" formControlName="cpf"/>
+        <input nz-input placeholder="Insira o CPF" formControlName="cpf" (keydown)="onKeyDown($event)"/>
       </div>
 
       <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
-        <label>Ficha</label>
-        <input nz-input placeholder="Insira o número" formControlName="record"/>
+        <label>RG</label>
+        <input nz-input placeholder="Insira o RG" formControlName="rg" (keydown)="onKeyDown($event)"/>
       </div>
 
       <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
-        <label>Arquivado</label>
-        <nz-select nzPlaceHolder="Selecione" formControlName="archived">
-          <nz-option [nzValue]="true" nzLabel="Sim"></nz-option>
-          <nz-option [nzValue]="false" nzLabel="Não"></nz-option>
-        </nz-select>
+        <label>Ficha de Consulta</label>
+        <input nz-input placeholder="Insira o número" formControlName="record" (keydown)="onKeyDown($event)"/>
+      </div>
+
+      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+        <label>Ficha de Ecografia</label>
+        <input nz-input placeholder="Insira o número" formControlName="recordEco" (keydown)="onKeyDown($event)"/>
       </div>
     </form>
     <app-space height="16px"></app-space>
@@ -102,7 +105,7 @@
                               (click)="expandedFilter = !expandedFilter"></app-button-with-icon>
       </div>
       <div class="form-actions">
-        <div class="clear-filter">Limpar</div>
+        <div class="clear-filter" (click)="clearFilters()">Limpar</div>
         <app-button-with-icon text="Buscar"
                               icon="search"
                               variant="primary"
