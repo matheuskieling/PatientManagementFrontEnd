@@ -18,6 +18,8 @@ export class FileDialog {
     }, 2000)
   }
   downloadPdf() {
+    console.log('printing pdf');
+    console.log(window.document.body);
     window.print();
   }
 }
