@@ -1,17 +1,13 @@
 @page {
   size: 225mm 163mm;
-  //margin: -20px;
-  /* Only print the first page */
-  @top-right {
-    content: "";
-  }
+  margin: -20px;
 }
 @media print {
   body * {
     display: none !important;
   }
-  #print-container, #print-container * {
-    display: block !important;
+  #print-container {
+    display: flex !important;
     visibility: visible !important;
   }
 }
