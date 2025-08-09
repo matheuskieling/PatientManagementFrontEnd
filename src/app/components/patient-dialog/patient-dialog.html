@@ -3,7 +3,7 @@
   <div class="header-and-print">
     <div class="header-container">
       <h2 class="header-text">Ficha do paciente</h2>
-      <nz-icon nzType="close" class="close-icon"></nz-icon>
+      <nz-icon nzType="close" class="close-icon" (click)="closeModal()" [style.cursor]="'pointer'"></nz-icon>
     </div>
     <app-button-with-icon class="print" icon="printer" text="Imprimir" size="default" (click)="printPatientFile()"></app-button-with-icon>
   </div>

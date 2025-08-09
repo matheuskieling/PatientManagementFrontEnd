@@ -330,4 +330,7 @@ export class PatientDialog {
       })
     }
   }
+  closeModal() {
+    this.dialogRef.close();
+  }
 }
