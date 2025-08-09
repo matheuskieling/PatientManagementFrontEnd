@@ -37,6 +37,7 @@ export interface IPatientDialogData {
 })
 export class PatientDialog {
   addForm: FormGroup;
+  addContact: number = 0;
   categories: WritableSignal<ICategory[]>;
   healthPlans: WritableSignal<IHealthPlan[]>;
   bypassName: boolean = false;
@@ -53,7 +54,6 @@ export class PatientDialog {
     private healthPlanService: HealthPlanService,
     private dialogRef: MatDialogRef<PatientDialog>
   ) {
-    console.log(data);
     this.addForm = this.fb.group({
       name: [data.patient.name],
       category: [data.patient.category?.name],
@@ -67,17 +67,27 @@ export class PatientDialog {
       phone: [data.patient.phone],
       cpf: [data.patient.cpf, Validators.pattern(/^\d{11}$/)],
       rg: [data.patient.rg, Validators.pattern(/^\d{10}$/)],
-      contactName: [this.getPatientContactName(data.patient)],
-      contactPhone: [this.getPatientContactPhone(data.patient)],
+      contactName: [this.getPatientContactName(data.patient, 0)],
+      contactPhone: [this.getPatientContactPhone(data.patient, 0)],
+      contactName2: [this.getPatientContactName(data.patient, 1)],
+      contactPhone2: [this.getPatientContactPhone(data.patient, 1)],
+      contactName3: [this.getPatientContactName(data.patient, 2)],
+      contactPhone3: [this.getPatientContactPhone(data.patient, 2)],
     })
+    this.addContact = this.data.patient.contacts.length;
     this.categories = this.categoryService.getCategories();
     this.healthPlans = this.healthPlanService.getHealthPlans();
   }
-  getPatientContactName(patient: IPatient): string {
-    return patient.contacts && patient.contacts.length > 0 ? patient.contacts[0].name : '';
+
+  addNewContact(): void {
+    this.addContact += 1;
+    console.log('addContact', this.addContact);
   }
-  getPatientContactPhone(patient: IPatient): string {
-    return patient.contacts && patient.contacts.length > 0 ? (patient.contacts[0].phone ? patient.contacts[0].phone : '') : '';
+  getPatientContactName(patient: IPatient, index: number): string {
+    return patient.contacts && patient.contacts.length > index ? (patient.contacts[index].name ? patient.contacts[index].name : '') : '';
+  }
+  getPatientContactPhone(patient: IPatient, index: number): string {
+    return patient.contacts && patient.contacts.length > index ? (patient.contacts[index].phone ? patient.contacts[index].phone : '') : '';
   }
 
   formatDate(date: string | null | undefined): string {
@@ -113,7 +123,7 @@ export class PatientDialog {
               next: patient => {
                 this.dialogRef.close();
                 this.dialog.open(PatientDialog, {
-                  width: '572px',
+                  width: '600px',
                   data: { patient }
                 });
               },
@@ -146,7 +156,7 @@ export class PatientDialog {
               next: patient => {
                 this.dialogRef.close();
                 this.dialog.open(PatientDialog, {
-                  width: '572px',
+                  width: '600px',
                   data: { patient }
                 });
               },

@@ -35,14 +35,14 @@ export interface IPatientRequest {
 }
 
 export interface IContact {
-  name: string,
+  name?: string,
   phone?: string,
   patientId: string,
 }
 
 export interface IContactRequest {
-  name: string,
-  phone?: string,
+  name?: string | null,
+  phone?: string | null,
 }
 
 export interface ICategory {

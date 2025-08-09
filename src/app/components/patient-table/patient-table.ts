@@ -33,7 +33,7 @@ export class PatientTable {
 
   accessFile(patient: IPatient) {
     this.dialog.open(PatientDialog, {
-      width: '572px',
+      width: '600px',
       data: {
         patient
       },

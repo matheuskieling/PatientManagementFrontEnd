@@ -34,7 +34,7 @@ import { NewHealthPlanDialog } from '../new-health-plan-dialog/new-health-plan-d
   styleUrl: './new-patient-dialog.scss'
 })
 export class NewPatientDialog {
-  addContact: boolean = false;
+  addContact: number = 0;
   addForm: FormGroup;
   loading: boolean = false;
   categories: WritableSignal<ICategory[]>;
@@ -61,6 +61,9 @@ export class NewPatientDialog {
     this.categories = this.categoryService.getCategories();
     this.healthPlans = this.healthPlanService.getHealthPlans();
   }
+  addNewContact() {
+    this.addContact += 1;
+  }
 
   createForm() {
     return this.fb.group({
@@ -78,6 +81,10 @@ export class NewPatientDialog {
       rg: ['', Validators.pattern(/^\d{10}$/)],
       contactName: [''],
       contactPhone: [''],
+      contactName2: [''],
+      contactPhone2: [''],
+      contactName3: [''],
+      contactPhone3: [''],
     })
   }
 
@@ -104,7 +111,7 @@ export class NewPatientDialog {
               next: patient => {
                 this.dialogRef.close();
                 this.dialog.open(PatientDialog, {
-                  width: '572px',
+                  width: '600px',
                   data: { patient }
                 });
               },
@@ -137,7 +144,7 @@ export class NewPatientDialog {
               next: patient => {
                 this.dialogRef.close();
                 this.dialog.open(PatientDialog, {
-                  width: '572px',
+                  width: '600px',
                   data: { patient }
                 });
               },

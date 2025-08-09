@@ -118,14 +118,40 @@ export class PatientService {
       cpf: this.getFieldValueForString(formValues.get('cpf')?.value),
       rg: this.getFieldValueForString(formValues.get('rg')?.value),
       phone: this.getFieldValueForString(formValues.get('phone')?.value),
-      contacts: formValues.get('contactName')?.value || formValues.get('contactPhone')?.value ? [
-        {
-          phone: formValues.get('contactPhone')?.value,
-          name: formValues.get('contactName')?.value
-        } as IContactRequest
-      ] : [],
+      contacts: this.getContactsFromForm(formValues),
       categoryName: this.getFieldValueForString(formValues.get('category')?.value),
     } as IPatientRequest
+  }
+  getContactsFromForm(formValues: FormGroup): IContactRequest[] {
+    const contacts: IContactRequest[] = [];
+    const contactName = formValues.get('contactName')?.value;
+    const contactPhone = formValues.get('contactPhone')?.value;
+    const contactName2 = formValues.get('contactName2')?.value;
+    const contactPhone2 = formValues.get('contactPhone2')?.value;
+    const contactName3 = formValues.get('contactName3')?.value;
+    const contactPhone3 = formValues.get('contactPhone3')?.value;
+
+    if (contactName || contactPhone) {
+      contacts.push({
+        name: this.getFieldValueForString(contactName),
+        phone: this.getFieldValueForString(contactPhone),
+      });
+    }
+
+    if (contactName2 || contactPhone2) {
+      contacts.push({
+        name: this.getFieldValueForString(contactName2),
+        phone: this.getFieldValueForString(contactPhone2),
+      });
+    }
+
+    if (contactName3 || contactPhone3) {
+      contacts.push({
+        name: this.getFieldValueForString(contactName3),
+        phone: this.getFieldValueForString(contactPhone3),
+      });
+    }
+    return contacts;
   }
 
   getPatients(): void {
