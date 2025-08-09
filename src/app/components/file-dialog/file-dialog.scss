@@ -1,5 +1,5 @@
 @page {
-  size: A4 landscape;
+  size: 225mm 165mm;
 }
 @media print {
   body * {
@@ -22,7 +22,7 @@
   .border {
     border: 2px solid black;
     padding: 20px;
-    width: 550px;
+    width: 650px;
     display: grid;
     font-size: var(--space-300);
   }
@@ -61,7 +61,7 @@
 
   .dados-table-row
   {
-    padding: 0;
+    padding: 0 20px;
   }
 
   .dados-table-header {
