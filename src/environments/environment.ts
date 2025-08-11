@@ -1,4 +1,4 @@
 ﻿export const environment = {
   production: true,
-  apiUrl: 'http://72.60.2.46:5000',
+  apiUrl: 'https://fetaledigital.com.br:5000',
 }
