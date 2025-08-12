@@ -44,6 +44,13 @@
             <td class="dados-table-row">
               <table>
                 <tr>
+                  <td class="dados-table-row-phone">{{ data.phone || '' }}</td>
+                  <td style="width: 20px;"></td>
+                  <td class="dados-table-row-name">R</td>
+                  <td style="width: 10px;"></td>
+                  <td class="dados-table-row-name">Telefone da Paciente</td>
+                </tr>
+                <tr>
                   <td class="dados-table-row-phone">{{ data.contacts.length >= 1 ? data.contacts[0].phone : '' }}</td>
                   <td style="width: 20px;"></td>
                   <td class="dados-table-row-name">R</td>
@@ -56,13 +63,6 @@
                   <td class="dados-table-row-name">R</td>
                   <td style="width: 10px;"></td>
                   <td class="dados-table-row-name">{{data.contacts.length >= 2 ? data.contacts[1].name : ''}}</td>
-                </tr>
-                <tr>
-                  <td class="dados-table-row-phone">{{ data.contacts.length >= 3 ? data.contacts[2].phone : '' }}</td>
-                  <td style="width: 20px;"></td>
-                  <td class="dados-table-row-name">R</td>
-                  <td style="width: 10px;"></td>
-                  <td class="dados-table-row-name">{{data.contacts.length >= 3 ? data.contacts[2].name : ''}}</td>
                 </tr>
               </table>
             </td>

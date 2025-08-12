@@ -74,7 +74,7 @@ export class PatientDialog {
       contactName3: [this.getPatientContactName(data.patient, 2)],
       contactPhone3: [this.getPatientContactPhone(data.patient, 2)],
     })
-    this.addContact = this.data.patient.contacts.length;
+    this.addContact = this.data.patient.contacts.length + 1;
     this.categories = this.categoryService.getCategories();
     this.healthPlans = this.healthPlanService.getHealthPlans();
   }

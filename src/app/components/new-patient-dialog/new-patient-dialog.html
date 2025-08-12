@@ -138,18 +138,7 @@
       </div>
     }
 
-    @if (addContact > 2) {
-      <div class="form-field col-span-2">
-        <label>Responsável</label>
-        <input nz-input placeholder="Insira o nome do responsável" formControlName="contactName3"/>
-      </div>
-      <div class="form-field">
-        <label>Telefone</label>
-        <input nz-input placeholder="Insira o telefone do responsável" formControlName="contactPhone3"/>
-      </div>
-    }
-
-    @if(addContact < 3) {
+    @if(addContact < 2) {
       <div class="add-contact full-width" (click)="addNewContact()">Adicionar Responsável</div>
     }
 

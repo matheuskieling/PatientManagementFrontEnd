@@ -119,7 +119,7 @@
       <input nz-input placeholder="Insira o número" formControlName="healthPlanNumber"/>
     </div>
 
-    @if (data.patient && (data.patient.contacts.length > 0 || addContact > 0)) {
+    @if (data.patient && (data.patient.contacts.length > 0 || addContact > 1)) {
       <div class="form-field col-span-2">
         <label>Responsável</label>
         <input nz-input placeholder="Insira o nome do responsável" formControlName="contactName"/>
@@ -130,7 +130,7 @@
       </div>
     }
 
-    @if (data.patient && (data.patient.contacts.length > 1 || addContact > 1)) {
+    @if (data.patient && (data.patient.contacts.length > 1 || addContact > 2)) {
       <div class="form-field col-span-2">
         <label>Responsável</label>
         <input nz-input placeholder="Insira o nome do responsável" formControlName="contactName2"/>
@@ -138,17 +138,6 @@
       <div class="form-field">
         <label>Telefone</label>
         <input nz-input placeholder="Insira o telefone do responsável" formControlName="contactPhone2"/>
-      </div>
-    }
-
-    @if (data.patient && (data.patient.contacts.length > 2 || addContact > 2)) {
-      <div class="form-field col-span-2">
-        <label>Responsável</label>
-        <input nz-input placeholder="Insira o nome do responsável" formControlName="contactName3"/>
-      </div>
-      <div class="form-field">
-        <label>Telefone</label>
-        <input nz-input placeholder="Insira o telefone do responsável" formControlName="contactPhone3"/>
       </div>
     }
 
