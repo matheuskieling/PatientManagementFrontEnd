@@ -75,11 +75,13 @@ export class Filter {
   }
   submitForm() {
     if (this.filterForm.valid) {
+      this.patientService.page.set(1);
       this.patientService.setFilters(this.filterForm);
     }
   }
   handleNewPatient() {
     this.dialog.open(NewPatientDialog, {
+      disableClose: true,
       width: '572px',
     });
   }

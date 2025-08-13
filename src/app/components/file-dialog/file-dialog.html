@@ -34,7 +34,12 @@
           </tr>
           <tr>
             <th class="dados-table-header">ENDEREÇO:</th>
-            <td class="dados-table-row">{{ data.address?.toUpperCase() ?? '' }}</td>
+            <td class="dados-table-row">{{ data.street?.toUpperCase() ?? '' }}</td>
+          </tr>
+          <tr>
+
+            <th class="dados-table-header"></th>
+            <td class="dados-table-row">{{ data.city?.toUpperCase() ?? '' }}</td>
           </tr>
           <tr>
             <td class="dados-table-row" colspan="2">&nbsp;</td>

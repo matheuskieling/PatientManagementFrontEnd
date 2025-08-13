@@ -71,7 +71,8 @@ export class NewPatientDialog {
       category: [null],
       record: [null],
       recordEco: [null],
-      address: [''],
+      city: [''],
+      street: [''],
       birthDate: [null, Validators.pattern(/^\d{2}\/\d{1,2}\/\d{4}$/)],
       healthPlan: [null],
       healthPlanNumber: [''],
@@ -92,191 +93,238 @@ export class NewPatientDialog {
     if (!this.addForm.valid) return;
 
     // Use firstValueFrom to avoid deprecated toPromise
-    const res = await firstValueFrom(this.patientService.validatePatient(this.addForm));
-
-    // Defensive: If res is undefined, abort
-    if (!res) return;
-
-    // CPF validation
-    if (res.cpf && !res.cpf.isValid) {
-      this.dialog.open(Dialog, {
-        width: '572px',
-        data: {
-          title: 'CPF já cadastrado no nome de outro paciente.',
-          subtitle: 'Deseja navegar até a ficha do paciente?',
-          confirmText: 'Cancelar',
-          actionText: 'Acessar ficha',
-          action: () => {
-            this.patientService.getPatientByCpf(this.addForm.get('cpf')?.value).subscribe({
-              next: patient => {
-                this.dialogRef.close();
-                this.dialog.open(PatientDialog, {
-                  width: '600px',
-                  data: { patient }
-                });
-              },
-              error: _ => this.dialog.open(Dialog, {
-                width: '416px',
-                data: {
-                  title: 'Erro ao acessar ficha do paciente',
-                  subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
-                  confirmText: 'Ok'
-                }
-              })
-            });
-          }
-        }
-      });
-      return;
-    }
-
-    // RG validation
-    if (res.rg && !res.rg.isValid) {
-      this.dialog.open(Dialog, {
-        width: '572px',
-        data: {
-          title: 'RG já cadastrado no nome de outro paciente.',
-          subtitle: 'Deseja navegar até a ficha do paciente?',
-          confirmText: 'Cancelar',
-          actionText: 'Acessar ficha',
-          action: () => {
-            this.patientService.getPatientByRg(this.addForm.get('rg')?.value).subscribe({
-              next: patient => {
-                this.dialogRef.close();
-                this.dialog.open(PatientDialog, {
-                  width: '600px',
-                  data: { patient }
-                });
-              },
-              error: _ => this.dialog.open(Dialog, {
-                width: '416px',
-                data: {
-                  title: 'Erro ao acessar ficha do paciente',
-                  subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
-                  confirmText: 'Ok'
-                }
-              })
-            });
-          }
-        }
-      });
-      return;
-    }
-
-    // Name validation
-    if (res.name && !res.name.isValid && !this.bypassName) {
-      const result = await firstValueFrom(
-        this.dialog.open(ConfirmDialog, {
-          width: '572px',
-          data: {
-            title: 'Nome já cadastrado em outro paciente',
-            subtitle: 'A ação ira criar um paciente <span class="font-weight-bold">com mesmo nome</span>. Deseja continuar mesmo assim?',
-            confirmText: 'Continuar',
-            cancelText: 'Cancelar',
-          }
-        }).afterClosed()
-      );
-
-      if (!result) {
-        this.bypassFileNumber = false
-        this.bypassName = false;
-        this.bypassFileNumberEco = false;
-        return;
-      }
-      this.bypassName = true;
-      return this.onSubmit();
-    }
-
-    // File number validation
-    if (res.fileNumber && !res.fileNumber.isValid && !this.bypassFileNumber) {
-      const result = await firstValueFrom(
-        this.dialog.open(ConfirmDialog, {
-          width: '572px',
-          data: {
-            title: 'Ficha de consulta já cadastrada em outro paciente',
-            subtitle: 'A ação irá <span class="font-weight-bold">remover o número da ficha</span> do outro paciente. Deseja continuar mesmo assim?',
-            confirmText: 'Continuar',
-            cancelText: 'Cancelar',
-          }
-        }).afterClosed()
-      );
-
-      if (!result) {
-        this.bypassFileNumber = false
-        this.bypassName = false;
-        this.bypassFileNumberEco = false;
-        return;
-      }
-      this.bypassFileNumber = true;
-      return this.onSubmit();
-    }
-
-    // File number eco validation
-    if (res.fileNumberEco && !res.fileNumberEco.isValid && !this.bypassFileNumberEco) {
-      const result = await firstValueFrom(
-        this.dialog.open(ConfirmDialog, {
-          width: '572px',
-          data: {
-            title: 'Ficha de ecografia já cadastrada em outro paciente',
-            subtitle: 'A ação irá <span class="font-weight-bold">remover o número da ficha</span> do outro paciente. Deseja continuar mesmo assim?',
-            confirmText: 'Continuar',
-            cancelText: 'Cancelar',
-          }
-        }).afterClosed()
-      );
-
-      if (!result) {
-        this.bypassFileNumber = false
-        this.bypassName = false;
-        this.bypassFileNumberEco = false;
-        return;
-      }
-      this.bypassFileNumberEco = true;
-      return this.onSubmit();
-    }
-
-    this.loading = true;
-    this.bypassFileNumberEco = false;
-    this.bypassFileNumber = false;
-    this.bypassName = false;
     try {
-      const created = await firstValueFrom(this.patientService.createPatient(this.addForm));
-      this.loading = false;
-      this.patientService.getPatients();
+      const res = await firstValueFrom(this.patientService.validatePatient(this.addForm));
+      if (!res) {
+        this.dialog.open(Dialog, {
+          width: '416px',
+          data: {
+            title: 'Erro ao validar paciente',
+            subtitle: 'Não foi possível validar os dados do paciente. Tente novamente mais tarde.',
+            confirmText: 'Ok'
+          }
+        });
+        return;
+      }
+      if (res.cpf && !res.cpf.isValid) {
+        this.dialog.open(Dialog, {
+          width: '572px',
+          data: {
+            title: 'CPF já cadastrado no nome de outro paciente.',
+            subtitle: 'Deseja navegar até a ficha do paciente?',
+            confirmText: 'Cancelar',
+            actionText: 'Acessar ficha',
+            action: () => {
+              this.patientService.getPatientByCpf(this.addForm.get('cpf')?.value).subscribe({
+                next: patient => {
+                  this.dialogRef.close();
+                  this.dialog.open(PatientDialog, {
+                    disableClose: true,
+                    width: '600px',
+                    data: { patient }
+                  });
+                },
+                error: _ => this.dialog.open(Dialog, {
+                  width: '416px',
+                  data: {
+                    title: 'Erro ao acessar ficha do paciente',
+                    subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
+                    confirmText: 'Ok'
+                  }
+                })
+              });
+            }
+          }
+        });
+        return;
+      }
+
+      // RG validation
+      if (res.rg && !res.rg.isValid) {
+        this.dialog.open(Dialog, {
+          width: '572px',
+          data: {
+            title: 'RG já cadastrado no nome de outro paciente.',
+            subtitle: 'Deseja navegar até a ficha do paciente?',
+            confirmText: 'Cancelar',
+            actionText: 'Acessar ficha',
+            action: () => {
+              this.patientService.getPatientByRg(this.addForm.get('rg')?.value).subscribe({
+                next: patient => {
+                  this.dialogRef.close();
+                  this.dialog.open(PatientDialog, {
+                    disableClose: true,
+                    width: '600px',
+                    data: { patient }
+                  });
+                },
+                error: _ => this.dialog.open(Dialog, {
+                  width: '416px',
+                  data: {
+                    title: 'Erro ao acessar ficha do paciente',
+                    subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
+                    confirmText: 'Ok'
+                  }
+                })
+              });
+            }
+          }
+        });
+        return;
+      }
+
+      // Name validation
+      if (res.name && !res.name.isValid && !this.bypassName) {
+        const result = await firstValueFrom(
+          this.dialog.open(ConfirmDialog, {
+            width: '572px',
+            data: {
+              title: 'Nome já cadastrado em outro paciente',
+              subtitle: 'A ação ira criar um paciente <span class="font-weight-bold">com mesmo nome</span>. Deseja continuar mesmo assim?',
+              confirmText: 'Continuar',
+              cancelText: 'Cancelar',
+            }
+          }).afterClosed()
+        );
+
+        if (!result) {
+          this.bypassFileNumber = false
+          this.bypassName = false;
+          this.bypassFileNumberEco = false;
+          return;
+        }
+        this.bypassName = true;
+        return this.onSubmit();
+      }
+
+      // File number validation
+      if (res.fileNumber && !res.fileNumber.isValid && !this.bypassFileNumber) {
+        const result = await firstValueFrom(
+          this.dialog.open(ConfirmDialog, {
+            width: '572px',
+            data: {
+              title: 'Ficha de consulta já cadastrada em outro paciente',
+              subtitle: 'A ação irá <span class="font-weight-bold">remover o número da ficha</span> do outro paciente. Deseja continuar mesmo assim?',
+              confirmText: 'Continuar',
+              cancelText: 'Cancelar',
+            }
+          }).afterClosed()
+        );
+
+        if (!result) {
+          this.bypassFileNumber = false
+          this.bypassName = false;
+          this.bypassFileNumberEco = false;
+          return;
+        }
+        this.bypassFileNumber = true;
+        return this.onSubmit();
+      }
+
+      // File number eco validation
+      if (res.fileNumberEco && !res.fileNumberEco.isValid && !this.bypassFileNumberEco) {
+        const result = await firstValueFrom(
+          this.dialog.open(ConfirmDialog, {
+            width: '572px',
+            data: {
+              title: 'Ficha de ecografia já cadastrada em outro paciente',
+              subtitle: 'A ação irá <span class="font-weight-bold">remover o número da ficha</span> do outro paciente. Deseja continuar mesmo assim?',
+              confirmText: 'Continuar',
+              cancelText: 'Cancelar',
+            }
+          }).afterClosed()
+        );
+
+        if (!result) {
+          this.bypassFileNumber = false
+          this.bypassName = false;
+          this.bypassFileNumberEco = false;
+          return;
+        }
+        this.bypassFileNumberEco = true;
+        return this.onSubmit();
+      }
+
+      this.loading = true;
+      this.bypassFileNumberEco = false;
+      this.bypassFileNumber = false;
+      this.bypassName = false;
+      try {
+        const created = await firstValueFrom(this.patientService.createPatient(this.addForm));
+        if (!created) {
+          this.loading = false;
+          this.dialog.open(Dialog, {
+            width: '416px',
+            data: {
+              title: 'Erro ao criar paciente',
+              subtitle: 'Não foi possível criar o paciente. Tente novamente mais tarde.',
+              confirmText: 'Ok'
+            }
+          });
+          return;
+        }
+        this.loading = false;
+        this.patientService.getPatients();
+        this.dialog.open(Dialog, {
+          width: '416px',
+          data: {
+            title: 'Paciente criado com sucesso. \n Gostaria de impimir o envolope agora?',
+            subtitle: 'Caso prefira, você pode imprimir depois acessando a ficha do paciente.',
+            confirmText: 'Concluir',
+            actionText: 'Imprimir',
+            action: () => {
+              if (!created) return;
+              this.patientService.getPatientById(created.id).subscribe({
+                next: patient => {
+                  this.dialog.open(FileDialog, {
+                    minWidth: '1000px',
+                    height: 'fit-content',
+                    data: patient,
+                  })
+                },
+                error: err => this.dialog.open(Dialog, {
+                  width: '572px',
+                  data: {
+                    title: 'Erro ao acessar ficha do paciente',
+                    subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
+                    confirmText: 'Ok'
+                  }
+                })
+              })
+            }
+          }
+        });
+        this.dialogRef.close(true);
+      } catch (err) {
+        this.loading = false;
+        console.error('Error creating patient', err);
+        this.dialog.open(Dialog, {
+          width: '416px',
+          data: {
+            title: 'Erro ao criar paciente',
+            subtitle: 'Não foi possível criar o paciente. Tente novamente mais tarde.',
+            confirmText: 'Ok'
+          }
+        });
+        return;
+      }
+    } catch (err) {
+      console.error('Validation error', err);
       this.dialog.open(Dialog, {
         width: '416px',
         data: {
-          title: 'Paciente criado com sucesso. \n Gostaria de impimir o envolope agora?',
-          subtitle: 'Caso prefira, você pode imprimir depois acessando a ficha do paciente.',
-          confirmText: 'Concluir',
-          actionText: 'Imprimir',
-          action: () => {
-            if (!created) return;
-            this.patientService.getPatientById(created.id).subscribe({
-              next: patient => {
-                this.dialog.open(FileDialog, {
-                  minWidth: '1000px',
-                  height: 'fit-content',
-                  data: patient,
-                })
-              },
-              error: err => this.dialog.open(Dialog, {
-                width: '572px',
-                data: {
-                  title: 'Erro ao acessar ficha do paciente',
-                  subtitle: 'Não foi possível acessar a ficha do paciente. Tente novamente mais tarde.',
-                  confirmText: 'Ok'
-                }
-              })
-            })
-          }
+          title: 'Erro ao validar paciente',
+          subtitle: 'Não foi possível validar os dados do paciente. Tente novamente mais tarde.',
+          confirmText: 'Ok'
         }
       });
-      this.dialogRef.close(true);
-    } catch (err) {
-      this.loading = false;
-      console.log('Patient error', err);
+      return;
     }
+
+    // Defensive: If res is undefined, abort
+
+    // CPF validation
+
   }
   handleNewCategory() {
     this.dialog.open(NewCategoryDialog, {

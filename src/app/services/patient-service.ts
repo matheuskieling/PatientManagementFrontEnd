@@ -21,7 +21,8 @@ export interface IPatientFilters {
   gender?: 'M' | 'F' | null,
   cpf?: string | null,
   rg?: string | null,
-  address?: string | null,
+  city?: string | null,
+  street?: string | null,
   phones?: string | null,
   category?: string | null,
   pageNumber: number,
@@ -53,7 +54,8 @@ export class PatientService {
     if (filters.name) params.append('name', filters.name);
     if (filters.cpf) params.append('cpf', filters.cpf);
     if (filters.rg) params.append('rg', filters.rg);
-    if (filters.address) params.append('address', filters.address);
+    if (filters.city) params.append('city', filters.city);
+    if (filters.street) params.append('street', filters.street);
     if (filters.phones) params.append('phones', filters.phones);
     if (filters.gender) params.append('gender', filters.gender);
     if (filters.category) params.append('category', filters.category);
@@ -113,7 +115,8 @@ export class PatientService {
       healthPlanName: this.getFieldValueForString(formValues.get('healthPlan')?.value),
       healthPlanNumber: this.getFieldValueForString(formValues.get('healthPlanNumber')?.value),
       name: this.getFieldValueForString(formValues.get('name')?.value),
-      address: this.getFieldValueForString(formValues.get('address')?.value),
+      city: this.getFieldValueForString(formValues.get('city')?.value),
+      street: this.getFieldValueForString(formValues.get('street')?.value),
       gender: this.getFieldValueForString(formValues.get('gender')?.value),
       cpf: this.getFieldValueForString(formValues.get('cpf')?.value),
       rg: this.getFieldValueForString(formValues.get('rg')?.value),
@@ -185,6 +188,7 @@ export class PatientService {
   updatePatient(formValues: FormGroup, patient: IPatient): Observable<IPatient> {
     var updatedPatient = this.addFormToPatient(formValues);
     updatedPatient.id = patient.id;
+    console.log(updatedPatient, patient)
     return this.http.post<IPatient>(`${this._apiUrl}/patient/update`, updatedPatient);
   }
 

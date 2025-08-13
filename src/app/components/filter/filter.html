@@ -20,33 +20,10 @@
         <input nz-input placeholder="Selecione uma data" formControlName="birthDate" mask="d0/M0/0000" [dropSpecialCharacters]="false" [showMaskTyped]="true" (keydown)="onKeyDown($event)"/>
       </div>
 
-      <div class="form-field">
-        <label>Categoria</label>
-        <nz-select
-          nzPlaceHolder="Selecione"
-          formControlName="category"
-          [nzDropdownRender]="dropdownRenderCategory"
-          style="width: 100%" >
-
-
-          <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
-          @for (option of categories(); track option.id) {
-            <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
-          }
-
-        </nz-select>
-
-        <!-- Template do botão customizado -->
-        <ng-template #dropdownRenderCategory>
-          <div class="custom-dropdown-btn" (click)="handleNewCategory()">
-            Criar nova categoria
-          </div>
-        </ng-template>
-      </div>
 
       <div class="form-field">
         <label>Convênio</label>
-        <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan"
+        <nz-select nzShowSearch nzPlaceHolder="Selecione" formControlName="healthPlan"
                    [nzDropdownRender]="dropdownRenderConvenio">
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           @for (option of healthPlans(); track option.id) {
@@ -64,7 +41,7 @@
 
       <div class="form-field">
         <label>Gênero</label>
-        <nz-select nzPlaceHolder="Selecione" formControlName="gender">
+        <nz-select nzShowSearch nzPlaceHolder="Selecione" formControlName="gender">
 
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           <nz-option nzValue="M" nzLabel="Masculino"></nz-option>
@@ -72,7 +49,7 @@
         </nz-select>
       </div>
 
-      <div class="form-field" [style.display]="expandedFilter ? 'block' : 'none'">
+      <div class="form-field">
         <label>Telefone</label>
         <input nz-input placeholder="Insira o telefone" formControlName="phone" (keydown)="onKeyDown($event)"/>
       </div>

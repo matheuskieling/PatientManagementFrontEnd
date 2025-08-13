@@ -10,7 +10,8 @@
   name?: string | null,
   cpf?: string | null,
   rg?: string | null,
-  address?: string | null,
+  city?: string | null,
+  street?: string | null,
   contacts: IContact[],
   category?: ICategory | null,
   isArchived?: boolean
@@ -28,7 +29,8 @@ export interface IPatientRequest {
   cpf?: string | null,
   rg?: string | null,
   phone?: string | null,
-  address?: string | null,
+  city?: string | null,
+  street?: string | null,
   contacts: IContact[],
   categoryName?: ICategory | null,
   isArchived?: boolean
