@@ -100,4 +100,7 @@ export class Filter {
     this.patientService.page.set(1);
     this.patientService.setFilters(this.filterForm);
   }
+  filterOption= (input: string, option: any): boolean => {
+    return option.nzLabel.toLowerCase().startsWith(input.toLowerCase());
+  };
 }

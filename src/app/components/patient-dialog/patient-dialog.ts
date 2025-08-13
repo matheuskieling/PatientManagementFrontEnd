@@ -366,4 +366,8 @@ export class PatientDialog {
   closeModal() {
     this.dialogRef.close();
   }
+
+  filterOption= (input: string, option: any): boolean => {
+    return option.nzLabel.toLowerCase().startsWith(input.toLowerCase());
+  };
 }

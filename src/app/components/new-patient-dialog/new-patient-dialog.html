@@ -78,8 +78,7 @@
 
     <div class="form-field">
       <label>Convênio</label>
-      <nz-select nzPlaceHolder="Selecione" formControlName="healthPlan"
-                 [nzDropdownRender]="dropdownRenderConvenio">
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" formControlName="healthPlan" [nzDropdownRender]="dropdownRenderConvenio">
         <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
         @for (option of healthPlans(); track option.id) {
           <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>

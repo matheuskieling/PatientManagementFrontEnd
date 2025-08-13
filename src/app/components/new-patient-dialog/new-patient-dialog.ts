@@ -339,4 +339,8 @@ export class NewPatientDialog {
       width: '572px',
     });
   }
+
+  filterOption= (input: string, option: any): boolean => {
+    return option.nzLabel.toLowerCase().startsWith(input.toLowerCase());
+  };
 }

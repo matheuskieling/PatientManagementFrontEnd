@@ -23,8 +23,8 @@
 
       <div class="form-field">
         <label>Convênio</label>
-        <nz-select nzShowSearch nzPlaceHolder="Selecione" formControlName="healthPlan"
-                   [nzDropdownRender]="dropdownRenderConvenio">
+        <nz-select nzShowSearch [nzSelectOnTab]="true" [nzFilterOption]="filterOption" nzPlaceHolder="Selecione" formControlName="healthPlan" [nzDropdownRender]="dropdownRenderConvenio">
+
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           @for (option of healthPlans(); track option.id) {
             <nz-option [nzValue]="option.name" [nzLabel]="option.name"></nz-option>
@@ -41,7 +41,7 @@
 
       <div class="form-field">
         <label>Gênero</label>
-        <nz-select nzShowSearch nzPlaceHolder="Selecione" formControlName="gender">
+        <nz-select nzShowSearch [nzSelectOnTab]="true" [nzFilterOption]="filterOption" nzPlaceHolder="Selecione" formControlName="gender">
 
           <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
           <nz-option nzValue="M" nzLabel="Masculino"></nz-option>
