@@ -18,14 +18,14 @@
   justify-content: center;
   align-items: center;
   font-family: Arial, sans-serif;
-  font-size: var(--space-500);
+  font-size: var(--space-500) !important;
 
   .border {
     border: 2px solid black;
     padding: 40px;
     width: 800px;
     display: grid;
-    font-size: var(--space-500);
+    font-size: var(--space-500) !important;
   }
 
   .dados {
@@ -44,6 +44,11 @@
     border: 1px solid #aaa;
     padding: 12px 20px;
     min-width: 150px;
+    font-size: var(--space-500) !important;
+  }
+  .font-500 {
+    font-family: Arial, sans-serif;
+    font-size: var(--space-500) !important;
   }
 
   .dados-table-header,
