@@ -34,7 +34,7 @@
 
     <div class="form-field">
       <label>Gênero</label>
-      <nz-select nzPlaceHolder="Selecione" formControlName="gender">
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" formControlName="gender">
         <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
         <nz-option nzValue="M" nzLabel="Masculino"></nz-option>
         <nz-option nzValue="F" nzLabel="Feminino"></nz-option>
