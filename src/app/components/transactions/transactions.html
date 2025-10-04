@@ -1,0 +1,132 @@
+<div class="background">
+  <div class="header-container">
+    <div class="title-container">
+      <div class="title">Transações</div>
+      <span class="print hidden">({{dateString}})</span>
+    </div>
+    <app-button-with-icon class="no-print" icon="printer" text="Imprimir" size="default" (click)="print()"></app-button-with-icon>
+  </div>
+  <form class="filters no-print" [formGroup]="filterForm!">
+    <div class="form-field">
+      <label>Período</label>
+      <nz-range-picker [nzPlaceHolder]="['Início', 'Fim']" formControlName="date"></nz-range-picker>
+    </div>
+    <div class="form-field">
+      <label>Método de pagamento</label>
+      <nz-select
+        nzShowSearch
+        [nzSelectOnTab]="true"
+        nzPlaceHolder="Selecione"
+        nzMode="multiple"
+        formControlName="paymentMethods"
+      >
+        @for (option of paymentMethods; track option) {
+          <nz-option [nzValue]="option.value" [nzLabel]="option.key"></nz-option>
+        }
+      </nz-select>
+    </div>
+    <div class="form-field">
+      <label>Convênio</label>
+      <nz-select nzShowSearch [nzSelectOnTab]="true" [nzFilterOption]="filterOption" nzPlaceHolder="Selecione" formControlName="healthPlanId" [nzDropdownRender]="dropdownRenderConvenio">
+
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of healthPlans(); track option.id) {
+          <nz-option [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+        }
+      </nz-select>
+
+      <!-- Template do botão customizado -->
+      <ng-template #dropdownRenderConvenio>
+        <div class="custom-dropdown-btn" (click)="handleNewHealthPlan()" >
+          Adicionar novo convênio
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="form-field">
+      <label>Médico</label>
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" formControlName="doctorId" [nzDropdownRender]="dropdownRenderMedico">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of doctors(); track option.id) {
+          <nz-option [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+        }
+      </nz-select>
+
+      <ng-template #dropdownRenderMedico>
+        <div class="custom-dropdown-btn" (click)="handleNewDoctor()" >
+          Adicionar novo médico
+        </div>
+      </ng-template>
+    </div>
+    <div class="form-actions">
+      <div class="clear-filter" (click)="clearFilters()">Limpar</div>
+    </div>
+  </form>
+
+  <nz-table [nzTotal]="payments().length"
+            [nzFrontPagination]="false"
+            [nzShowPagination]="false"
+            [nzBordered]="true"
+            [nzWidthConfig]="widthConfig"
+            [nzData]="payments()">
+    <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Data</th>
+      <th>Convênio</th>
+      <th>Médico</th>
+      <th>Método de pag.</th>
+      <th>Transação</th>
+      <th class="no-print">Ação</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (payment of payments(); track payment.id) {
+        <tr>
+          <td>
+            <div class="description-container">
+              <div class="description-description">{{payment.description}}</div>
+              <span class="description-patient">{{payment.patient?.name ?? ''}}</span>
+            </div>
+          </td>
+          <td>{{payment.date | date: 'dd/MM/yyyy' : 'America/Sao_Paulo'}}</td>
+          <td>{{payment.healthPlan?.name ?? ''}}</td>
+          <td>{{payment.doctor?.name ?? ''}}</td>
+          <td>{{PAYMENT_METHOD_STRING[payment.paymentMethod!]}}</td>
+          <td>
+            <nz-tag [nzColor]="payment.isIncome ? 'green' : 'red'">
+              {{payment.isIncome ? "" : "-"}}{{payment.value | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+            </nz-tag>
+          </td>
+
+          <td class="no-print">
+            <div class="table-actions">
+              <div class="table-action-icon-container">
+                <nz-icon class="table-action-icon" nzType="edit" (click)="updateTransaction(payment)"></nz-icon>
+              </div>
+              <div class="table-action-icon-container">
+                <nz-icon class="table-action-icon" nzType="delete" (click)="deleteTransaction(payment.id)"></nz-icon>
+              </div>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+
+  <div class="table-footer">
+    <div>Total de entrada</div>
+    <div [style.color]="'#389E0D'">{{tableClosing().income | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</div>
+  </div>
+  <div class="table-footer">
+    <div>Total de saída</div>
+    <div [style.color]="'#CF1322'">{{tableClosing().outcome | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</div>
+  </div>
+  <div class="table-footer">
+    <div>Saldo final</div>
+    <div
+      [style.color]="tableClosing().total > 0 ? '#389E0D' : tableClosing().total < 0 ? '#CF1322' : 'black'">
+      {{tableClosing().total | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+    </div>
+  </div>
+</div>

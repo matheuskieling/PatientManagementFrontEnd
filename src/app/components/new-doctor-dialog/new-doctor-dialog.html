@@ -1,0 +1,37 @@
+<div class="dialog-container">
+  <div class="dialog-title">
+    <div>Adicionar novo médico</div>
+  </div>
+  <div class="dialog-form-and-list">
+    <form class="dialog-form" [formGroup]="addDoctorForm">
+      <input nz-input placeholder="Adicionar médico" formControlName="name"/>
+      <app-button-with-icon icon="plus" variant="primary" (click)="createDoctor()" [disabled]="(addDoctorForm.get('name')?.touched && !addDoctorForm.get('name')?.value) ?? false"></app-button-with-icon>
+    </form>
+    <div class="dialog-list">
+      @for (doctor of doctors(); track doctor.id) {
+        <div class="dialog-list-item">
+          @if (isEditing && editingDoctorId === doctor.id) {
+            <form [formGroup]="editDoctorForm">
+              <input nz-input placeholder="Editar convênio" formControlName="name" [formGroup]="editDoctorForm"/>
+            </form>
+          }
+          @else {
+            <span>{{ doctor.name }}</span>
+          }
+          <div class="dialog-list-item-actions">
+            @if (isEditing && editingDoctorId === doctor.id) {
+              <div (click)="saveEditedDoctor(doctor)">Salvar</div>
+            }
+            @else {
+              <div [ngClass]="isEditing ? 'disabled' : ''" (click)="editDoctor(doctor)">Editar</div>
+            }
+            <div [ngClass]="isEditing ? 'disabled' : ''" (click)="deleteDoctor(doctor)">Deletar</div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="dialog-footer">
+    <button nz-button nzSize="large" nzType="primary" (click)="closeModal()">Ok</button>
+  </div>
+</div>

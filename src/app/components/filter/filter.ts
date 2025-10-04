@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, WritableSignal } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
-import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 import { Space } from '../space/space';
 import { ICategory, IHealthPlan } from '../../interfaces/IPatient.model';
 import { CategoryService } from '../../services/category-service';
@@ -15,6 +14,7 @@ import { NewPatientDialog } from '../new-patient-dialog/new-patient-dialog';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NewCategoryDialog } from '../new-category-dialog/new-category-dialog';
 import { NewHealthPlanDialog } from '../new-health-plan-dialog/new-health-plan-dialog';
+import { GreetingService } from '../../services/greeting-service';
 
 @Component({
   selector: 'app-filter',
@@ -43,6 +43,7 @@ export class Filter {
               private fb: FormBuilder,
               private patientService: PatientService,
               private dialog: MatDialog,
+              private greetingService: GreetingService
               ) {
     this.filterForm = this.fb.group({
       name: [''],
@@ -56,14 +57,7 @@ export class Filter {
       record: [''],
       recordEco: [''],
     });
-    const now = new Date().getHours();
-    if (now < 12) {
-      this.greeting = "Bom dia!";
-    } else if (now < 18) {
-      this.greeting = "Boa tarde!";
-    } else {
-      this.greeting = "Boa noite!";
-    }
+    this.greeting = greetingService.getGreeting();
     this.categories = this.categoryService.getCategories();
     this.healthPlans = this.healthPlanService.getHealthPlans();
   }

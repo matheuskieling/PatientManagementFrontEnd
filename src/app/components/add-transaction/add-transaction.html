@@ -1,0 +1,10 @@
+<div class="background no-print">
+  <div class="greeting-container">
+    <span class="greeting">{{greeting}}</span>
+    <span class="title">Vamos adicionar transações?</span>
+  </div>
+  <div class="buttons-container">
+    <app-button-with-icon icon="plus-circle" text="Nova entrada" color="#389E0D" (click)="openEntryDialog()"></app-button-with-icon>
+    <app-button-with-icon icon="minus-circle" text="Nova saída" color="#CF1322" (click)="openSpendingDialog()"></app-button-with-icon>
+  </div>
+</div>

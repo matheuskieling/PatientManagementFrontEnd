@@ -4,16 +4,13 @@
   background-color: white;
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
   height: 66px;
 }
 .header-container {
   width: 1000px;
   display: flex;
-  align-items: center;
-  gap: var(--space-300);
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 .logo {
   width: var(--space-700);
@@ -23,3 +20,17 @@
   @include typography.header-h1;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+}
+
+.nav-container {
+  display: flex;
+  align-items: flex-end;
+}
+.nav-list {
+  display: flex;
+  gap: var(--space-1000);
+}

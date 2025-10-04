@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth-service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { APP_NAME } from '../../../constants';
 
 @Component({
   selector: 'app-login',
@@ -35,4 +36,6 @@ export class Login {
       this.loginForm.markAllAsTouched();
     }
   }
+
+  protected readonly APP_NAME = APP_NAME;
 }

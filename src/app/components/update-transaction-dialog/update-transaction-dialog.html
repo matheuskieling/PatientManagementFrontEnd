@@ -1,0 +1,105 @@
+<div class="dialog-container">
+  <div class="dialog-header-container">
+    <div class="dialog-header-title">Nova entrada</div>
+    <nz-icon nzType="close" class="close-icon" (click)="closeModal()" [style.cursor]="'pointer'"></nz-icon>
+  </div>
+  <form class="dialog-form-container" [formGroup]="updateTransactionForm">
+    <div class="form-field col-span-2">
+      <label>Descrição</label>
+      <input
+        nz-input
+        placeholder="Insira uma descrição"
+        formControlName="description"
+        [nzStatus]="(updateTransactionForm.get('description')?.hasError('required') || updateTransactionForm.get('description')?.hasError('email')) && updateTransactionForm.get('description')?.touched ? 'error' : ''"
+      />
+      <div class="error">
+        @if (updateTransactionForm.get('description')?.hasError('required') && updateTransactionForm.get('description')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Paciente</label>
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" (nzOnSearch)="onPatientChange($event)" formControlName="patientId">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of patients; track option.id) {
+          <nz-option [nzValue]="option.id" [nzLabel]="option.name ?? ''"></nz-option>
+        }
+      </nz-select>
+    </div>
+
+    <div class="form-field">
+      <label>Convênio</label>
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" formControlName="healthPlanId" [nzDropdownRender]="dropdownRenderConvenio">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of healthPlans(); track option.id) {
+          <nz-option [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+        }
+      </nz-select>
+
+      <ng-template #dropdownRenderConvenio>
+        <div class="custom-dropdown-btn" (click)="handleNewHealthPlan()" >
+          Adicionar novo convênio
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="form-field">
+      <label>Médico</label>
+      <nz-select nzShowSearch [nzSelectOnTab]="true"  nzPlaceHolder="Selecione" formControlName="doctorId" [nzDropdownRender]="dropdownRenderMedico">
+        <nz-option [nzValue]="null" nzLabel="N/A"></nz-option>
+        @for (option of doctors(); track option.id) {
+          <nz-option [nzValue]="option.id" [nzLabel]="option.name"></nz-option>
+        }
+      </nz-select>
+
+      <ng-template #dropdownRenderMedico>
+        <div class="custom-dropdown-btn" (click)="handleNewDoctor()" >
+          Adicionar novo médico
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="form-field">
+      <label>Método de pagamento</label>
+      <nz-select
+        nzShowSearch
+        [nzSelectOnTab]="true"
+        nzPlaceHolder="Selecione"
+        formControlName="paymentMethod"
+        [nzStatus]="(updateTransactionForm.get('paymentMethod')?.hasError('required') || updateTransactionForm.get('paymentMethod')?.hasError('email')) && updateTransactionForm.get('paymentMethod')?.touched ? 'error' : ''"
+      >
+        @for (option of paymentMethods; track option) {
+          <nz-option [nzValue]="option.value" [nzLabel]="option.key"></nz-option>
+        }
+      </nz-select>
+      <div class="error">
+        @if (updateTransactionForm.get('paymentMethod')?.hasError('required') && updateTransactionForm.get('paymentMethod')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-field col-span-2">
+      <label>Valor</label>
+      <input
+        nz-input
+        placeholder="Insira o valor"
+        formControlName="value"
+        mask="separator.2" prefix="R$ "
+        thousandSeparator="."
+        decimalMarker=","
+        [nzStatus]="(updateTransactionForm.get('value')?.hasError('required') || updateTransactionForm.get('value')?.hasError('email')) && updateTransactionForm.get('value')?.touched ? 'error' : ''"
+      />
+      <div class="error">
+        @if (updateTransactionForm.get('value')?.hasError('required') && updateTransactionForm.get('value')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+  </form>
+  <div class="form-footer">
+    <app-button-with-icon text="Salvar" icon="save" variant="primary" (click)="onSubmit()"></app-button-with-icon>
+  </div>
+</div>

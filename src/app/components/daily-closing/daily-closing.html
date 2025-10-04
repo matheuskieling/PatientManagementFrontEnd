@@ -1,0 +1,28 @@
+<div class="background no-print">
+  <div class="header-container">
+    <div class="header-title">Fechamento do dia</div>
+    <div class="header-date">{{getFormattedDate()}}</div>
+  </div>
+  <div class="payments-container">
+    <div class="card-container">
+      <div class="card-title">Total de entrada</div>
+      <div class="card-money money-positive">{{dailyClosing().income | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</div>
+      <span class="card-footer-note">em dinheiro e pix</span>
+    </div>
+    <div class="border-around card-container">
+      <div class="card-title">Total de saída</div>
+      <div class="card-money money-negative">{{dailyClosing().outcome | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</div>
+      <span class="card-footer-note">em dinheiro e pix</span>
+    </div>
+    <div class="card-container">
+      <div class="card-title">Saldo final</div>
+      <div
+        class="card-money"
+        [class]="dailyClosing().total >= 0 ? 'money-positive' : 'money-negative'">
+        {{(Math.abs(dailyClosing().total)) | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+      </div>
+      <span class="card-footer-note">em dinheiro e pix</span>
+    </div>
+  </div>
+</div>
+

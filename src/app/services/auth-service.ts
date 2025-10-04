@@ -15,7 +15,7 @@ export class AuthService {
   login(username: string, password: string): void {
     this.http.post<IAuth>(`${this._apiUrl}/auth/login`, { username, password }).subscribe(response => {
       localStorage.setItem('token', response.token);
-      this._router.navigate(['/home']);
+      this._router.navigate(['/fichario']);
     });
   }
 

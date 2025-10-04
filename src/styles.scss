@@ -2,6 +2,8 @@
 :root {
   --ant-primary-8: #0050B3;
   --ant-background-color: #F0F2F5;
+  --ant-green-primary: #389E0D;
+  --ant-red-primary: #CF1322;
 
   --space-100: 4px;
   --space-150: 6px;
@@ -84,4 +86,20 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+.main-content {
+  width: 1000px;
+  margin: 24px auto 180px auto;
+  display: grid;
+  gap: 24px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print {
+    display: block !important;
+  }
 }

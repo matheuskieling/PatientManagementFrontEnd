@@ -1,0 +1,63 @@
+<div class="dialog-container">
+  <div class="dialog-header-container">
+    <div class="dialog-header-title">Nova saída</div>
+    <nz-icon nzType="close" class="close-icon" (click)="closeModal()" [style.cursor]="'pointer'"></nz-icon>
+  </div>
+  <form class="dialog-form-container" [formGroup]="addSpendingForm">
+    <div class="form-field col-span-2">
+      <label>Descrição</label>
+      <input
+        nz-input
+        placeholder="Insira uma descrição"
+        formControlName="description"
+        [nzStatus]="(addSpendingForm.get('description')?.hasError('required') || addSpendingForm.get('description')?.hasError('email')) && addSpendingForm.get('description')?.touched ? 'error' : ''"
+      />
+      <div class="error">
+        @if (addSpendingForm.get('description')?.hasError('required') && addSpendingForm.get('description')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Método de pagamento</label>
+      <nz-select
+        nzShowSearch
+        [nzSelectOnTab]="true"
+        nzPlaceHolder="Selecione"
+        formControlName="paymentMethod"
+        [nzStatus]="(addSpendingForm.get('paymentMethod')?.hasError('required') || addSpendingForm.get('paymentMethod')?.hasError('email')) && addSpendingForm.get('paymentMethod')?.touched ? 'error' : ''"
+      >
+        @for (option of paymentMethods; track option) {
+          <nz-option [nzValue]="option.value" [nzLabel]="option.key"></nz-option>
+        }
+      </nz-select>
+      <div class="error">
+        @if (addSpendingForm.get('paymentMethod')?.hasError('required') && addSpendingForm.get('paymentMethod')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Valor</label>
+      <input
+        nz-input
+        placeholder="Insira o valor"
+        formControlName="value"
+        mask="separator.2" prefix="R$ "
+        thousandSeparator="."
+        decimalMarker=","
+        [nzStatus]="(addSpendingForm.get('value')?.hasError('required') || addSpendingForm.get('value')?.hasError('email')) && addSpendingForm.get('value')?.touched ? 'error' : ''"
+      />
+      <div class="error">
+        @if (addSpendingForm.get('value')?.hasError('required') && addSpendingForm.get('value')?.touched) {
+          <div>Campo Obrigatório</div>
+        }
+      </div>
+    </div>
+  </form>
+  <div class="form-footer">
+    <app-button-with-icon text="Salvar" icon="save" variant="primary" (click)="onSubmit()"></app-button-with-icon>
+  </div>
+</div>

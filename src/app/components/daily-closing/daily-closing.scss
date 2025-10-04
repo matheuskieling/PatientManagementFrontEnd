@@ -1,0 +1,53 @@
+@use '../../../mixins/typography' as typography;
+.background {
+  width: 100%;
+  background-color: white;
+  padding: var(--space-600);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--space-400);
+}
+.header-title {
+  @include typography.h5-medium;
+}
+.header-date {
+  @include typography.body-regular;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.payments-container {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  margin-inline: calc(-1 * var(--space-600));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: var(--space);
+  margin-bottom: calc(-1 * var(--space-600));
+}
+.border-around {
+  border-left: 1px solid rgba(0,0,0,0.06);
+  border-right: 1px solid rgba(0,0,0,0.06);
+}
+.card-container {
+  padding: var(--space-600);
+}
+.card-title {
+  @include typography.body-regular;
+}
+.card-money {
+  @include typography.money;
+  margin-top: var(--space-250);
+}
+.card-footer-note {
+  @include typography.footer-note;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.money-positive {
+  color: var(--ant-green-primary);
+}
+.money-negative {
+  color: var(--ant-red-primary);
+}

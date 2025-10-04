@@ -66,6 +66,15 @@ export interface IHealthPlanRequest {
   name: string;
 }
 
+export interface IDoctor {
+  id: string;
+  name: string;
+}
+
+export interface IDoctorRequest {
+  name: string;
+}
+
 export interface IValidationResults {
   name: IValidationField,
   cpf: IValidationField,

@@ -1,0 +1,19 @@
+@use '../../../mixins/typography' as typography;
+
+.nav-link-container {
+  display: flex;
+  gap: var(--space-250);
+  padding-bottom: 12px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer !important;
+}
+
+.nav-link-text {
+  @include typography.body-regular
+}
+
+.active {
+  color: var(--ant-primary-8);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--ant-primary-8);
+}

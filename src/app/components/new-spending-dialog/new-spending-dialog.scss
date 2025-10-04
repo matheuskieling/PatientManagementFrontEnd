@@ -1,0 +1,70 @@
+@use '../../../mixins/typography' as typography;
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+}
+.dialog-header-container {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-400) var(--space-600);
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05)
+}
+
+.dialog-header-title {
+  @include typography.h5-medium;
+}
+
+.close-icon {
+  color: rgba(0,0,0,0.45);
+}
+
+.form-field {
+  display: grid;
+  position: relative;
+  gap: var(--space-200);
+
+  input, nz-select, nz-date-picker {
+    width: 100%;
+  }
+}
+
+.error {
+  position: absolute;
+  bottom: -14px;
+  display: grid;
+  color: red;
+  margin-top: var(--space-200);
+  gap: var(--space-100);
+  font-size: var(--space-250);
+}
+
+.custom-dropdown-btn {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-250) var(--space-600);
+  cursor: pointer;
+  margin-top: 4px;
+  color: var(--ant-primary-8) !important;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-250) var(--space-400) var(--space-250);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+.dialog-form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-400);
+    padding: var(--space-600)
+}
+.col-span-2 {
+  grid-column: span 2;
+}

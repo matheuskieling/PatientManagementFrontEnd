@@ -10,7 +10,7 @@ import {
 } from '../interfaces/IPatient.model';
 import { IPageable } from '../interfaces/IPageable.model';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 
 export interface IPatientFilters {
   fileNumber?: number | null,
@@ -161,6 +161,12 @@ export class PatientService {
     this.http.get<IPageable<IPatient>>(`${this._apiUrl}/patient/list${this.filtersToUrlParams(this.filters)}`).subscribe(patients => {
       this.patients.set(patients);
     });
+  }
+  searchPatients(name: string): Observable<IPatient[]> {
+    if (name.length) {
+      return this.http.get<IPatient[]>(`${this._apiUrl}/patient/search/?name=${name}`).pipe(take(1));
+    }
+    else return of([]);
   }
 
   getPatientById(patientId: string): Observable<IPatient> {
