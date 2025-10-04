@@ -14,6 +14,7 @@ import { NewDoctorDialog } from '../new-doctor-dialog/new-doctor-dialog';
 import { IPayment } from '../../interfaces/IPayment.model';
 import { PaymentMethod } from '../../../enums/enums';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
+import { PAYMENT_METHOD_STRING } from '../../../constants';
 
 @Component({
   selector: 'app-update-transaction-dialog',
@@ -103,4 +104,5 @@ export class UpdateTransactionDialog {
   }
 
   protected readonly PaymentMethod = PaymentMethod;
+  protected readonly PAYMENT_METHOD_STRING: {[key: string]: string} = PAYMENT_METHOD_STRING;
 }

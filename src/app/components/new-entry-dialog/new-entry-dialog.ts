@@ -15,6 +15,7 @@ import { DoctorService } from '../../services/doctor-service';
 import { NewDoctorDialog } from '../new-doctor-dialog/new-doctor-dialog';
 import { PaymentService } from '../../services/payment-service';
 import { IPayment } from '../../interfaces/IPayment.model';
+import { PAYMENT_METHOD_STRING } from '../../../constants';
 
 @Component({
   selector: 'app-new-entry-dialog',
@@ -94,4 +95,5 @@ export class NewEntryDialog {
   }
 
   protected readonly PaymentMethod = PaymentMethod;
+  protected readonly PAYMENT_METHOD_STRING: {[key: number]: string} = PAYMENT_METHOD_STRING;
 }

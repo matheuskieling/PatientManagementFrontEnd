@@ -71,7 +71,7 @@
         [nzStatus]="(addEntryForm.get('paymentMethod')?.hasError('required') || addEntryForm.get('paymentMethod')?.hasError('email')) && addEntryForm.get('paymentMethod')?.touched ? 'error' : ''"
       >
         @for (option of paymentMethods; track option) {
-          <nz-option [nzValue]="option.value" [nzLabel]="option.key"></nz-option>
+          <nz-option [nzValue]="option.value" [nzLabel]="PAYMENT_METHOD_STRING[+option.value]"></nz-option>
         }
       </nz-select>
       <div class="error">

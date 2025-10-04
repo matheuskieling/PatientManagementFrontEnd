@@ -9,6 +9,7 @@ import { NzInputDirective } from 'ng-zorro-antd/input';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ButtonWithIcon } from '../button-with-icon/button-with-icon';
+import { PAYMENT_METHOD_STRING } from '../../../constants';
 
 @Component({
   selector: 'app-new-spending-dialog',
@@ -56,4 +57,5 @@ export class NewSpendingDialog {
   }
 
   protected readonly PaymentMethod = PaymentMethod;
+  protected readonly PAYMENT_METHOD_STRING: {[key: string]: string} = PAYMENT_METHOD_STRING;
 }

@@ -21,7 +21,7 @@
         formControlName="paymentMethods"
       >
         @for (option of paymentMethods; track option) {
-          <nz-option [nzValue]="option.value" [nzLabel]="option.key"></nz-option>
+          <nz-option [nzValue]="option.value" [nzLabel]="PAYMENT_METHOD_STRING[+option.value]"></nz-option>
         }
       </nz-select>
     </div>
@@ -101,11 +101,11 @@
 
           <td class="no-print">
             <div class="table-actions">
-              <div class="table-action-icon-container">
-                <nz-icon class="table-action-icon" nzType="edit" (click)="updateTransaction(payment)"></nz-icon>
+              <div class="table-action-icon-container" (click)="updateTransaction(payment)">
+                <nz-icon class="table-action-icon" nzType="edit"></nz-icon>
               </div>
-              <div class="table-action-icon-container">
-                <nz-icon class="table-action-icon" nzType="delete" (click)="deleteTransaction(payment.id)"></nz-icon>
+              <div class="table-action-icon-container" (click)="deleteTransaction(payment.id)">
+                <nz-icon class="table-action-icon" nzType="delete"></nz-icon>
               </div>
             </div>
           </td>

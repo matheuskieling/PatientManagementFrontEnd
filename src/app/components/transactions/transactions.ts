@@ -109,7 +109,7 @@ export class Transactions {
   }
 
   protected readonly presetColors = presetColors;
-  protected readonly PAYMENT_METHOD_STRING = PAYMENT_METHOD_STRING;
+  protected readonly PAYMENT_METHOD_STRING: {[key: number]: string} = PAYMENT_METHOD_STRING;
 
   deleteTransaction(id: string) {
     const dialogRef = this.dialog.open(ConfirmDialog, {
