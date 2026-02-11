@@ -1,59 +1,106 @@
-# FicharioDigitalFront
+# Fichario Digital — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+The web frontend for Fichario Digital, a patient and financial management system for fetal clinics. Built with Angular 20 and Ant Design (ng-zorro-antd).
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Framework:** Angular 20 (standalone components)
+- **Language:** TypeScript 5.8 (strict mode)
+- **UI Library:** ng-zorro-antd (Ant Design for Angular)
+- **State Management:** Angular Signals
+- **Styling:** SCSS + CSS custom properties, LESS for ng-zorro theming
+- **Auth:** JWT stored in localStorage, HTTP interceptor for Bearer tokens
+- **Input Masking:** ngx-mask (CPF, RG, phone)
+- **PDF Export:** html2pdf.js
+
+## Features
+
+### Patient Records (Fichario)
+- Paginated patient table with advanced filtering (name, CPF, RG, phone, gender, birth date, category, health plan)
+- Create and edit patients with form validation and duplicate detection
+- Auto-generated file numbers (consultation and ultrasound)
+- Emergency contact management
+- Health plan and category association
+- Patient envelope/file printing via PDF export
+
+### Financial Module (Financeiro)
+- Income and expense tracking with daily closing summary
+- Filter transactions by date range, doctor, health plan, or payment method (Card, Pix, Cash)
+- Create, edit, and delete transactions
+- Print-friendly transaction view
+
+### Supporting Entities
+- Doctor, health plan, and category management via dialogs
+- Pre-delete impact verification
+
+### Authentication
+- Login and registration pages
+- JWT-based auth with automatic 401 redirect
+- HTTP interceptor attaches Bearer token to all API requests
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── pages/                  4 pages (Login, Register, Fichario, Financeiro)
+│   ├── components/             20 feature & dialog components
+│   ├── services/               7 HTTP services (auth, patient, payment, doctor, etc.)
+│   ├── interfaces/             TypeScript models & DTOs
+│   ├── app.routes.ts           Route definitions
+│   ├── auth-interceptor.ts     JWT HTTP interceptor
+│   └── app.config.ts           Angular DI configuration
+├── enums/                      PaymentMethod enum
+├── environments/               Dev & production API URLs
+├── constants.ts                App-wide constants
+├── styles.scss                 Global styles & design tokens
+└── theme.less                  ng-zorro theme overrides
+```
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (LTS)
+- [Angular CLI](https://angular.dev/tools/cli) (`npm install -g @angular/cli`)
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Environment configuration
+
+The API URL is configured per environment:
+
+| Environment | File | API URL |
+|---|---|---|
+| Development | `src/environments/environment.dev.ts` | `http://localhost:5000/api` |
+| Production | `src/environments/environment.ts` | `https://fetaledigital.com.br/api` |
+
+Make sure the [backend API](https://github.com/matheuskieling/PatientManagement) is running before starting the frontend.
+
+### Run the dev server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200`. The app reloads automatically on file changes.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build for production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Output goes to `dist/`.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Run tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Uses Karma + Jasmine.
