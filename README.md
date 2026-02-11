@@ -9,7 +9,7 @@ The web frontend for Fichario Digital, a patient and financial management system
 - **UI Library:** ng-zorro-antd (Ant Design for Angular)
 - **State Management:** Angular Signals
 - **Styling:** SCSS + CSS custom properties, LESS for ng-zorro theming
-- **Auth:** JWT stored in localStorage, HTTP interceptor for Bearer tokens
+- **Auth:** JWT stored in localStorage, HTTP interceptor for Bearer tokens (since it is a ONE user app, it was a decision to simplify architecture)
 - **Input Masking:** ngx-mask (CPF, RG, phone)
 - **PDF Export:** html2pdf.js
 
