@@ -1,6 +1,6 @@
 # Fichario Digital — Frontend
 
-The web frontend for Fichario Digital, a patient and financial management system for fetal clinics. Built with Angular 20 and Ant Design (ng-zorro-antd).
+The web frontend for Fichario Digital, a patient and financial management system for a doctor's clinic. Built with Angular 20 and Ant Design (ng-zorro-antd).
 
 ## Tech Stack
 
@@ -104,3 +104,6 @@ ng test
 ```
 
 Uses Karma + Jasmine.
+
+# IMPORTANT NOTE
+This is a real app and was authorized to be in a public repo by the *client*
